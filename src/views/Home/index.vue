@@ -1,0 +1,66 @@
+<template>
+  <div id="home">
+    <div class="home_left_func">
+      <home-left></home-left>
+    </div>
+    <div class="home_right">
+      <div class="home_top_func">
+        <home-top></home-top>
+      </div>
+      <div v-show="this.loginState" class="hr_show">
+        <home-video></home-video>
+      </div>
+      <div v-show="!this.loginState" class="hr-show">
+        <login></login>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import HomeLeft from "../../components/HomeFuntion/HomeLeft";
+import HomeTop from "../../components/HomeFuntion/HomeTop";
+import HomeVideo from "../../components/HomeFuntion/HomeVideo";
+import Login from "../../components/Login/Login";
+import { mapState } from "vuex"
+
+export default {
+  name: "Home",
+  computed: {
+    ...mapState({
+      loginState: state => state.login.loginState,
+    }),
+  },
+  components: {
+    HomeLeft,
+    HomeTop,
+    HomeVideo,
+    Login,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+#home {
+  display: flex;
+  height: 100%;
+  position: relative;
+  .home_left_func {
+    background: #e7e7e7;
+    width: 5%;
+    height: 100vh;
+  }
+  .home_right {
+    width: 95%;
+    .home_top_func {
+      width: 100%;
+      height: 4rem;
+      border-bottom: 0.1rem solid #e6e6e6;
+      box-sizing: border-box;
+    }
+    .hr_show {
+      width: 100%;
+    }
+  }
+}
+</style>
