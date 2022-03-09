@@ -54,8 +54,7 @@ export default {
     width: 95%;
     .home_top_func {
       width: 100%;
-      height: 4rem;
-      border-bottom: 0.1rem solid #e6e6e6;
+      border-bottom: 0.01rem solid #e6e6e6;
       box-sizing: border-box;
     }
     .hr_show {

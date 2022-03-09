@@ -35,8 +35,8 @@ export default {
   name: "Login",
   data() {
     return {
-      userName: "",
-      password: "",
+      userName: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userName : "",
+      password: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).password : "",
     };
   },
   computed: {
@@ -59,6 +59,7 @@ export default {
               userName: this.userName,
               password: this.password,
               hpImg: data.headPortrait,
+              access: data.access,
             });
             this.hhp = true;
             this.setLoginState();

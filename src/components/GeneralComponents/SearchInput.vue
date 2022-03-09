@@ -1,9 +1,11 @@
 <template>
   <div id="myInput">
     <div class="searchBox">
-      <input class="mi-input" type="text" placeholder="搜索你感兴趣的内容"/>
-      <div class="iconfont icon-sousuo mi-search-icon"></div>
-      <div>搜索</div>
+      <input class="mi-input" type="text" placeholder="搜索你感兴趣的内容" />
+      <div class="searchBtnBox">
+        <div class="iconfont icon-sousuo mi-search-icon"></div>
+        <div class="searchTextBtn">搜索</div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,28 +21,35 @@ export default {
   position: relative;
   .searchBox {
     display: flex;
+    justify-content: space-between;
     width: 20rem;
     height: 2.1rem;
     box-sizing: border-box;
     border: 0.01rem solid rgb(136, 136, 136);
     border-radius: 0.5rem;
-    .mi-search-icon {
-      width: 10%;
-      height: 2.1rem;
-      line-height: 2rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      right: 0;
-      cursor: pointer;
-    }
-    .mi-search-icon:hover {
-        color: rgb(53, 170, 224);
-    }
     .mi-input {
-      width: 90%;
+      width: 16rem;
       line-height: 2rem;
       border-radius: 0.5rem;
       padding: 0 0.5rem 0 1rem;
+    }
+    .searchBtnBox {
+      display: flex;
+      font-weight: bold;
+      cursor: pointer;
+      .mi-search-icon {
+        width: 1rem;
+        height: 2.1rem;
+        line-height: 2rem;
+        border-radius: 0.5rem;
+      }
+      .searchTextBtn {
+        width: 3rem;
+        line-height: 2rem;
+      }
+    }
+    .searchBtnBox:hover {
+      color: rgb(53, 170, 224);
     }
   }
 }
