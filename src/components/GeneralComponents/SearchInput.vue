@@ -1,7 +1,12 @@
 <template>
-  <div id="myInput">
+  <div class="myInput">
     <div class="searchBox">
-      <input class="mi-input" type="text" placeholder="搜索你感兴趣的内容" />
+      <input
+        class="mi-input"
+        :class="{ miInput: this.backColor == `black` }"
+        type="text"
+        placeholder="搜索你感兴趣的内容"
+      />
       <div class="searchBtnBox">
         <div class="iconfont icon-sousuo mi-search-icon"></div>
         <div class="searchTextBtn">搜索</div>
@@ -11,13 +16,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "SearchInput",
+  computed: {
+    ...mapState({
+      backColor: (state) => state.appSet.backColor,
+    }),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-#myInput {
+.myInput {
   position: relative;
   .searchBox {
     display: flex;
@@ -52,6 +63,11 @@ export default {
       color: rgb(53, 170, 224);
     }
   }
+}
+
+.miInput {
+  background-color: #161722;
+  color: #fff;
 }
 
 input {

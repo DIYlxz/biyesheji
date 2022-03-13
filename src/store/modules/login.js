@@ -15,5 +15,9 @@ export default {
             localStorage.setItem("user", _obj);
             state.user = obj;
         },
+        removeUser(state) {
+            state.user = null,
+            localStorage.removeItem("user");
+        }
     },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div class="home" :class="{ homeBack: this.backColor == `black` }">
     <div class="home_left_func">
       <home-left></home-left>
     </div>
@@ -22,13 +22,14 @@ import HomeLeft from "../../components/HomeFuntion/HomeLeft";
 import HomeTop from "../../components/HomeFuntion/HomeTop";
 import HomeVideo from "../../components/HomeFuntion/HomeVideo";
 import Login from "../../components/Login/Login";
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 
 export default {
   name: "Home",
   computed: {
     ...mapState({
-      loginState: state => state.login.loginState,
+      loginState: (state) => state.login.loginState,
+      backColor: (state) => state.appSet.backColor,
     }),
   },
   components: {
@@ -41,7 +42,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#home {
+.home {
   display: flex;
   height: 100%;
   position: relative;
@@ -59,6 +60,20 @@ export default {
     }
     .hr_show {
       width: 100%;
+    }
+  }
+}
+
+.homeBack {
+  color: #898790;
+  .home_left_func {
+    background-color: #060716;
+  }
+  .home_right {
+    background-color: #161722;
+    .home_top_func {
+      box-sizing: border-box;
+      border-bottom: 0.01rem solid #23242e;
     }
   }
 }

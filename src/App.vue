@@ -1,8 +1,23 @@
 <template>
   <div id="app">
     <router-view></router-view>
+    <change-skin></change-skin>
+    <idea-req></idea-req>
   </div>
 </template>
+
+<script>
+import ChangeSkin from './components/AppSet/ChangeSkin.vue'
+import IdeaReq from "./components/AppSet/IdeaReq.vue"
+
+export default {
+  name: "App",
+  components: {
+    ChangeSkin,
+    IdeaReq,
+  },
+}
+</script>
 
 <style lang="scss">
 * {
@@ -14,9 +29,10 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 :root {
