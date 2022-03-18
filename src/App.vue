@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import ChangeSkin from './components/AppSet/ChangeSkin.vue'
-import IdeaReq from "./components/AppSet/IdeaReq.vue"
+import ChangeSkin from "./components/AppSet/ChangeSkin.vue";
+import IdeaReq from "./components/AppSet/IdeaReq.vue";
 
 export default {
   name: "App",
@@ -16,7 +16,7 @@ export default {
     ChangeSkin,
     IdeaReq,
   },
-}
+};
 </script>
 
 <style lang="scss">

@@ -1,0 +1,21 @@
+
+
+//字体颜色#919296
+$light-info: #919296 !default;
+$light-info-hover: #494949 !default;
+
+$dark-info: rgba(138, 138, 145, 0.1) !default;
+$dark-info-hover: #ffffff !default;
+
+//背景颜色
+$light-left-back-color: #f1f2f5 !default;
+$light-right-back-color: #ffffff !default;
+
+//字体大小
+$font-size-base: 1rem !default;
+$font-size-lg: $font-size-base * 1.25 !default;
+$font-size-slg: $font-size-base * 1.75 !default;
+
+// 字重
+$font-weight-normal: 400 !default;
+$font-weight-bold: 600 !default;

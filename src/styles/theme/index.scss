@@ -1,0 +1,15 @@
+@import "../settings/variable.scss";
+
+$themes-color: (
+  default: (
+    // 全局样式属性
+    color: $info,
+    font-weight: $font-weight-normal,
+    font-size: $font-size-lg,
+  ),
+  old: (
+    color: $danger,
+    font-weight: $font-weight-bold,
+    font-size: $font-size-slg,
+  ),
+);

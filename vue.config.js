@@ -1,4 +1,4 @@
-// const webpack = require("webpack");
+
 
 module.exports = {
     publicPath: "/",
@@ -12,4 +12,5 @@ module.exports = {
     filenameHashing: true,
     lintOnSave: "default",
     productionSourceMap: false,
+    //配置css
 }
