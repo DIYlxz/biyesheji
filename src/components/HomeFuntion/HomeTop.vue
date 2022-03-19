@@ -91,9 +91,9 @@ export default {
     },
   },
   methods: {
-    ...mapMutations("login", ["setLoginState", "removeUser"]),
+    ...mapMutations("login", ["removeUser"]),
     loginOrRegister() {
-      this.setLoginState();
+      this.$router.push("/");
     },
     //展开用户设置栏目
     setupUser() {

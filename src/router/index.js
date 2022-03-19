@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home/index.vue'
+import Login from "../views/Login/index.vue"
 
 Vue.use(VueRouter)
 
@@ -8,20 +8,25 @@ Vue.use(VueRouter)
 const originalPush = VueRouter.prototype.push;
 
 VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err=>err);
+  return originalPush.call(this, location).catch(err => err);
 }
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: "/home",
+    name: "Home",
+    component: () => import("../views/Home/index.vue")
   },
   {
     path: "/mainPage",
     name: "MainPage",
-    component: ()=>import("../views/MainPage/index.vue")
-  }
+    component: () => import("../views/MainPage/index.vue")
+  },
 ]
 
 const router = new VueRouter({

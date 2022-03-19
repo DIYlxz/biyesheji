@@ -43,7 +43,7 @@ export default {
     ...mapState("login", ["user"]),
   },
   methods: {
-    ...mapMutations("login", ["setLoginState", "setUser"]),
+    ...mapMutations("login", ["setUser"]),
     reqLoginData() {
       sendPost("/login", {
         userName: this.userName,
@@ -64,7 +64,7 @@ export default {
               dyNumber: data.dyNumber,
             });
             this.hhp = true;
-            this.setLoginState();
+            this.$router.push("/home");
           } else {
             this.$message.error("账号密码错误");
           }

@@ -7,11 +7,8 @@
       <div class="home_top_func">
         <home-top></home-top>
       </div>
-      <div v-show="this.loginState" class="hr_show">
+      <div class="hr_show">
         <home-video></home-video>
-      </div>
-      <div v-show="!this.loginState" class="hr-show">
-        <login></login>
       </div>
     </div>
   </div>
@@ -21,14 +18,12 @@
 import HomeLeft from "../../components/HomeFuntion/HomeLeft";
 import HomeTop from "../../components/HomeFuntion/HomeTop";
 import HomeVideo from "../../components/HomeFuntion/HomeVideo";
-import Login from "../../components/Login/Login";
 import { mapState } from "vuex";
 
 export default {
   name: "Home",
   computed: {
     ...mapState({
-      loginState: (state) => state.login.loginState,
       backColor: (state) => state.appSet.backColor,
     }),
   },
@@ -36,7 +31,6 @@ export default {
     HomeLeft,
     HomeTop,
     HomeVideo,
-    Login,
   },
 };
 </script>

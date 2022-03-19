@@ -10,7 +10,9 @@
       <div class="mpBottomLeft">
         <mpb-left></mpb-left>
       </div>
-      <div class="mpBottomRight"></div>
+      <div class="mpBottomRight">
+        <mpb-right></mpb-right>
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +21,7 @@
 import HomeTop from "../../components/HomeFuntion/HomeTop.vue";
 import MpbLeft from "./MpbLeft.vue"
 import { mapState } from "vuex";
+import MpbRight from './MpbRight.vue';
 
 export default {
   name: "MainPage",
@@ -33,6 +36,7 @@ export default {
   components: {
     HomeTop,
     MpbLeft,
+    MpbRight,
   },
 };
 </script>
