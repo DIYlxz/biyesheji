@@ -7,6 +7,7 @@ import "element-ui/lib/theme-chalk/index.css";
 import "./mock/loginServe.js"
 import "./mock/videoData.js"
 import "./assets/font/iconfont.css";
+import "normalize.css/normalize.css";
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);

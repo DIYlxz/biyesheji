@@ -60,6 +60,8 @@ export default {
               password: this.password,
               hpImg: data.headPortrait,
               access: data.access,
+              infoName: data.infoName,
+              dyNumber: data.dyNumber,
             });
             this.hhp = true;
             this.setLoginState();

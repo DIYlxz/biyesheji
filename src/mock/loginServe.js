@@ -3,7 +3,10 @@ import Mock from 'mockjs'
 const userObj = [{
     userName: "dzz",
     password: "123456789",
-    headPortrait: "../../assets/images/LoginImg/01.jpg"
+    headPortrait: "../../assets/images/LoginImg/01.jpg",
+    infoName: "林轩之",
+    //1开头为男
+    dyNumber: "100001",
 }];
 
 Mock.mock("/api/login", "post", (data)=>{
@@ -15,6 +18,8 @@ Mock.mock("/api/login", "post", (data)=>{
                 msg: "账号密码正确",
                 headPortrait: userObj[i].headPortrait,
                 access: true,
+                infoName: userObj[i].infoName,
+                dyNumber: userObj[i].dyNumber,
             }
         }
     }

@@ -1,15 +1,25 @@
-@import "../settings/variable.scss";
+@import "./dark/index.scss";
+@import "./light/index.scss";
 
-$themes-color: (
-  default: (
-    // 全局样式属性
-    color: $info,
-    font-weight: $font-weight-normal,
-    font-size: $font-size-lg,
-  ),
-  old: (
-    color: $danger,
-    font-weight: $font-weight-bold,
-    font-size: $font-size-slg,
-  ),
+$themes: (
+  dark: $theme-dark,
+  light: $theme-light,
 );
+
+$theme-map: null;
+
+@mixin themify() {
+  @each $theme-name, $map in $themes {
+    [data-theme="#{$theme-name}"] & {
+      $theme-map: () !global;
+      @each $key, $value in $map {
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+    }
+    @content;
+  }
+}
+
+@function themed($key) {
+  @return map-get($theme-map, $key);
+}
