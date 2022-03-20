@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import MyInput from "../GeneralComponents/SearchInput.vue";
+import MyInput from "../../components/GeneralComponents/SearchInput.vue";
 import { mapState, mapMutations } from "vuex";
 
 export default {

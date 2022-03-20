@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "594371",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "1288623",
+      "name": "加",
+      "font_class": "jia",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "4972287",
+      "name": "评论",
+      "font_class": "pinglun",
+      "unicode": "e7f5",
+      "unicode_decimal": 59381
+    },
+    {
       "icon_id": "7577441",
       "name": "24gf-lock",
       "font_class": "24gf-lock",

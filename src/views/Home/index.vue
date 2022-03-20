@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import HomeLeft from "../../components/HomeFuntion/HomeLeft";
-import HomeTop from "../../components/HomeFuntion/HomeTop";
-import HomeVideo from "../../components/HomeFuntion/HomeVideo";
+import HomeLeft from "./HomeLeft";
+import HomeTop from "./HomeTop";
+import HomeVideo from "./HomeVideo";
 import { mapState } from "vuex";
 
 export default {

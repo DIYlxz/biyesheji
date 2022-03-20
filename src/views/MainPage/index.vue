@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import HomeTop from "../../components/HomeFuntion/HomeTop.vue";
+import HomeTop from "../Home/HomeTop.vue";
 import MpbLeft from "./MpbLeft.vue"
 import { mapState } from "vuex";
 import MpbRight from './MpbRight.vue';
