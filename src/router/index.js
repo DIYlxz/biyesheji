@@ -27,6 +27,11 @@ const routes = [
     name: "MainPage",
     component: () => import("../views/MainPage/index.vue")
   },
+  {
+    path: "/uploadVideo",
+    name: "UploadVideo",
+    component: () => import("../views/UploadVideo/index.vue")
+  },
 ]
 
 const router = new VueRouter({

@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "802974",
+      "name": "数据",
+      "font_class": "shuju",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "4840061",
+      "name": "消息",
+      "font_class": "xiaoxi1",
+      "unicode": "e65b",
+      "unicode_decimal": 58971
+    },
+    {
+      "icon_id": "5766792",
+      "name": "管理1-fill",
+      "font_class": "guanli-fill",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "4253513",
+      "name": "视频",
+      "font_class": "shipin1",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "11372739",
+      "name": "直播",
+      "font_class": "zhibo",
+      "unicode": "e8c1",
+      "unicode_decimal": 59585
+    },
+    {
       "icon_id": "594371",
       "name": "分享",
       "font_class": "fenxiang",

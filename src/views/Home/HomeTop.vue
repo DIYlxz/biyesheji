@@ -49,7 +49,7 @@
         </div>
         <div v-else @click="loginOrRegister">登陆/注册</div>
       </div>
-      <div class="htr-general">发布视频</div>
+      <div class="htr-general" @click="gotoRealeaseVideo">发布视频</div>
     </div>
   </div>
 </template>
@@ -92,6 +92,10 @@ export default {
   },
   methods: {
     ...mapMutations("login", ["removeUser"]),
+    //前往发布视频
+    gotoRealeaseVideo() {
+      this.$router.push("/uploadVideo");
+    },
     loginOrRegister() {
       this.$router.push("/");
     },

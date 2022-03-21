@@ -7,6 +7,9 @@
     <div class="iconfont icon-tuijian hliconSty">
       <div class="hl_text">推荐</div>
     </div>
+    <div class="iconfont icon-zhibo hliconSty">
+      <div class="hl_text">直播</div>
+    </div>
   </div>
 </template>
 

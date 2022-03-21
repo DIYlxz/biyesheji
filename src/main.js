@@ -10,6 +10,7 @@ import "./assets/font/iconfont.css";
 import "normalize.css/normalize.css";
 
 Vue.config.productionTip = false
+
 Vue.use(ElementUI);
 new Vue({
   router,

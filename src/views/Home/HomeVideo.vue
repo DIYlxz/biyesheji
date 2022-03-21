@@ -1,6 +1,6 @@
 <template>
   <div class="homeVideo">
-    <div v-for="item of locationData" :key="item.id" class="myVideoBox">
+    <div v-for="item of locationData" :key="item.id" class="myVideoBox myVideoScorll">
       <video class="hv-video" controls ref="myVideo">
         <source :src="item.video" type="video/mp4" />
         浏览器不支持 video 标签
@@ -76,7 +76,7 @@ export default {
     mouseScrollListen() {
       this.$nextTick(() => {
         const homeVideo = document.querySelector(".homeVideo");
-        const hv = document.querySelectorAll(".hv-video");
+        const hv = document.querySelectorAll(".myVideoScorll");
         homeVideo.addEventListener("wheel", (e) => {
           //滚轮向下滑动
           //   if (e.deltaY < 0) {
