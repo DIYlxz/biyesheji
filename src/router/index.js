@@ -30,7 +30,14 @@ const routes = [
   {
     path: "/uploadVideo",
     name: "UploadVideo",
-    component: () => import("../views/UploadVideo/index.vue")
+    component: () => import("../views/UploadVideo/index.vue"),
+    children: [{
+      path: "",
+      component: () => import("../views/UploadVideo/UploadVideoRight.vue"),
+    },{
+      path: "contentMessage",
+      component: () => import("../components/releaseVideo/ContentMessage.vue"),
+    }],
   },
 ]
 
