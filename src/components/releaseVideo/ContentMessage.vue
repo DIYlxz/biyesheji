@@ -8,6 +8,7 @@
       <div class="cm_tab_item" @click="changeBorder($event, 3)">未通过</div>
       <div class="cm_border cm_border_hover"></div>
     </div>
+    <div>没有更多作品</div>
   </div>
 </template>
 

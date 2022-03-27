@@ -2,7 +2,7 @@
   <div class="mpbRight">
     <div class="mpbrBox">
       <div class="mpbrTitle">
-        <div>作品<span>0</span></div>
+        <div>作品<span>{{user.worksNum}}</span></div>
       </div>
       <div class="mpbrTitle">
         <div>喜欢<span class="iconfont icon-24gf-lock mpbrtIcon"></span></div>
@@ -18,8 +18,12 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "MpbRight",
+  computed: {
+    ...mapState("login", ["user"]),
+  }
 };
 </script>
 

@@ -1,31 +1,43 @@
 <template>
   <div class="homeVideo">
-    <div v-for="item of locationData" :key="item.id" class="myVideoBox myVideoScorll">
-      <video class="hv-video" controls ref="myVideo">
-        <source :src="item.video" type="video/mp4" />
-        浏览器不支持 video 标签
-      </video>
-      <div class="hv_interaction">
-        <follow></follow>
-        <like></like>
-        <comment></comment>
-        <collection></collection>
-        <share></share>
+    <div
+      v-for="item of locationData"
+      :key="item.id"
+      class="myVideoBox myVideoScorll"
+    >
+      <div class="hv_myVideo">
+        <video class="hv_video" controls ref="myVideo">
+          <source :src="item.video" type="video/mp4" />
+          浏览器不支持 video 标签
+        </video>
+        <div class="hv_interaction">
+          <follow></follow>
+          <like></like>
+          <comment @click="openComment"></comment>
+          <collection></collection>
+          <share></share>
+        </div>
+      </div>
+      <div class="hv_commentBox" v-show="item.commentSwich">
+        <div class="hv_cb_title">
+          全部评论<span>(</span>{{ user.commentNum }}<span></span>)
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { sendGet } from "../../api/reqWay";
-import Comment from '../../components/VideoControl/Comment.vue';
+// import { sendGet } from "../../api/reqWay";
+import Comment from "../../components/VideoControl/Comment.vue";
 import Follow from "../../components/VideoControl/Follow.vue";
 import Like from "../../components/VideoControl/Like.vue";
 import collection from "../../components/VideoControl/Collection.vue";
-import share from "../../components/VideoControl/Share.vue"
+import share from "../../components/VideoControl/Share.vue";
+import { mapState } from "vuex";
 
 export default {
-  components: { Follow, Like, Comment, collection,share },
+  components: { Follow, Like, Comment, collection, share },
   name: "HomeVideo",
   data() {
     return {
@@ -39,6 +51,8 @@ export default {
           name: "001",
           id: "1d",
           video: require("../../assets/video/test/000001.mp4"),
+          //评论开关
+          commentSwich: false,
         },
         {
           name: "001",
@@ -59,19 +73,26 @@ export default {
     };
   },
   created() {
-    this.reqVideoSrc();
+    this.mouseScrollListen();
+  },
+  computed: {
+    ...mapState("login", ["user"]),
   },
   methods: {
-    //请求视频资源
-    async reqVideoSrc() {
-      await sendGet("/video").then((data) => {
-        let len = data.videoArr.length;
-        for (let i = 0; i < len; i++) {
-          this.videoData.push(data.videoArr[i]);
-        }
-        this.mouseScrollListen();
-      });
+    //展开评论
+    openComment() {
+      this.commentSwich = this.commentSwich ? false : true;
     },
+    //请求视频资源
+    // async reqVideoSrc() {
+    //   await sendGet("/video").then((data) => {
+    //     let len = data.videoArr.length;
+    //     for (let i = 0; i < len; i++) {
+    //       this.videoData.push(data.videoArr[i]);
+    //     }
+    //     this.mouseScrollListen();
+    //   });
+    // },
     //鼠标滚轮
     mouseScrollListen() {
       this.$nextTick(() => {
@@ -117,22 +138,43 @@ export default {
   overflow: hidden;
   .myVideoBox {
     position: relative;
-    .hv-video {
-      width: 90vw;
+    display: flex;
+    .hv_myVideo {
+      position: relative;
       height: 80vh;
-      border-radius: 0.5rem;
-      background: #000;
       margin: 1rem auto;
+      .hv_video {
+        width: 90vw;
+        height: 100%;
+        border-radius: 0.5rem;
+        background: #000;
+        position: relative;
+        z-index: 0;
+      }
+      .hv_interaction {
+        position: absolute;
+        right: 2rem;
+        top: 15rem;
+        z-index: 2;
+        pointer-events: none;
+      }
+    }
+    .hv_commentBox {
+      text-align: left;
+      margin: {
+        top: 1rem;
+        bottom: 1rem;
+        left: 0.5rem;
+      }
+      width: 20vw;
+      height: 80vh;
       position: relative;
       z-index: 0;
     }
-    .hv_interaction {
-      position: absolute;
-      right: 2rem;
-      top: 15rem;
-      z-index: 2;
-      pointer-events: none;
-    }
   }
 }
+</style>
+
+<style>
+
 </style>

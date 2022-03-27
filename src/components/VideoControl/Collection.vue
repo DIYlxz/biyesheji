@@ -3,13 +3,17 @@
     <div class="collectionBox">
       <span class="iconfont icon-shoucangxiao ctb_icon"></span>
     </div>
-    <div class="collectionNum">200</div>
+    <div class="collectionNum">{{user.collectionNum}}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Collection",
+  computed: {
+    ...mapState("login", ["user"]),
+  },
 };
 </script>
 

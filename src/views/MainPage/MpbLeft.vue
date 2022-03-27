@@ -8,17 +8,17 @@
         </div>
         <div class="mpbl_top_part">
           <p>关注</p>
-          <p class="mpbltp_num">0</p>
+          <p class="mpbltp_num">{{user.followNums || 0}}</p>
         </div>
         <div class="mpbl_top_part_border"></div>
         <div class="mpbl_top_part">
           <p>粉丝</p>
-          <p class="mpbltp_num">0</p>
+          <p class="mpbltp_num">{{user.fansNum || 0}}</p>
         </div>
         <div class="mpbl_top_part_border"></div>
         <div class="mpbl_top_part">
           <p>获赞</p>
-          <p class="mpbltp_num">0</p>
+          <p class="mpbltp_num">{{user.goodNum || 0}}</p>
         </div>
       </div>
       <div class="mpbl_info">

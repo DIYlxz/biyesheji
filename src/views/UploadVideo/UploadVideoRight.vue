@@ -2,7 +2,7 @@
   <div class="uploadVideoRight">
     <div class="uvr_title">发布视频</div>
     <div class="uvr_lunbo_box">
-      <el-carousel :interval="5000" arrow="always" height="80px">
+      <el-carousel :interval="3000" arrow="always" height="80px">
         <el-carousel-item v-for="item in advert" :key="item.id">
           <img :src="item.src" class="uvr_lunbp_img" />
         </el-carousel-item>

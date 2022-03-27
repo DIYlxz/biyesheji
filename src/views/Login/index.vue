@@ -35,8 +35,12 @@ export default {
   name: "Login",
   data() {
     return {
-      userName: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).userName : "",
-      password: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).password : "",
+      userName: localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).userName
+        : "",
+      password: localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user")).password
+        : "",
     };
   },
   computed: {
@@ -51,17 +55,33 @@ export default {
       })
         .then((data) => {
           if (data.access) {
+            console.log(data);
             this.$message({
               message: "登陆成功",
               type: "success",
             });
             this.setUser({
               userName: this.userName,
-              password: this.password,
-              hpImg: data.headPortrait,
+              hpImg: "../../assets/images/LoginImg/01.jpg",
               access: data.access,
+              //名称
               infoName: data.infoName,
+              //灯音号
               dyNumber: data.dyNumber,
+              //作品数量
+              worksNum: data.worksNum,
+              //粉丝数量
+              fansNum: data.fansNum,
+              //关注数量
+              followNums: data.followNums,
+              //喜欢数量
+              loveNum: data.loveNum,
+              //评论数量
+              commentNum: data.commentNum,
+              //收藏数
+              collectionNum: data.collectionNum,
+              //点赞数量
+              goodNum: data.goodNum,
             });
             this.hhp = true;
             this.$router.push("/home");

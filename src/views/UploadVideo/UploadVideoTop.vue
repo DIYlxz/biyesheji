@@ -21,7 +21,7 @@ export default {
   name: "uploadVideoTop",
   methods: {
     backHome() {
-      this.$router.back();
+      this.$router.push("/home");
     },
   },
 };

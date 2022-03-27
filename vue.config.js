@@ -12,5 +12,17 @@ module.exports = {
     filenameHashing: true,
     lintOnSave: "default",
     productionSourceMap: false,
-    //配置css
+    //代理
+    devServer: {
+        hotOnly: true,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8010",
+                ws: true,
+                pathRewrite: {
+                    "^/api": ""
+                }
+            },
+        },
+    },
 }

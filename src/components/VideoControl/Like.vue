@@ -3,13 +3,17 @@
     <div class="likeBox">
       <span class="iconfont icon-xihuan lb_icon"></span>
     </div>
-    <div class="likeNum">1.1w</div>
+    <div class="likeNum">{{ user.goodNum }}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Like",
+  computed: {
+    ...mapState("login", ["user"]),
+  },
 };
 </script>
 

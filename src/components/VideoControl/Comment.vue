@@ -3,13 +3,17 @@
     <div class="commentBox">
       <span class="iconfont icon-pinglun cb_icon"></span>
     </div>
-    <div class="commentNum">520</div>
+    <div class="commentNum">{{user.commentNum}}</div>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Comment",
+  computed: {
+    ...mapState("login", ["user"]),
+  },
 };
 </script>
 

@@ -2,12 +2,11 @@
   <div class="uploadVideoLeft">
     <div class="uvl_btn" @click="gotoReleaseVideo">发布视频</div>
     <div class="uvl_border"></div>
-    <div class="uvl_first_page uvl_title_box">
+    <div class="uvl_first_page uvl_title_box" @click="gotoFirstPage">
       <div>
         <span class="iconfont icon-shouye1 icon_sty"></span>
         <span>首页</span>
       </div>
-      <div></div>
     </div>
     <div class="uvl_content_run uvl_title_box" @click="changeContentHide">
       <div>
@@ -15,12 +14,19 @@
         <span>内容管理</span>
       </div>
       <div class="uvl_icon_rotate">
-        <div class="iconfont icon-xiala1 icon_rotate" :class="{icon_xiala: contentHide}"></div>
+        <div
+          class="iconfont icon-xiala1 icon_rotate"
+          :class="{ icon_xiala: contentHide }"
+        ></div>
       </div>
     </div>
     <div v-show="contentHide" class="uvl_small_title">
-      <div class="uvl_all_small_title" @click="gotoContentMessage">视频管理</div>
-      <div class="uvl_all_small_title">合集管理</div>
+      <div class="uvl_all_small_title" @click="gotoContentMessage">
+        视频管理
+      </div>
+      <div class="uvl_all_small_title" @click="gotoAggregateMessage">
+        合集管理
+      </div>
     </div>
     <div class="uvl_video_data uvl_title_box" @click="changeVideoHide">
       <div>
@@ -28,7 +34,10 @@
         <span>视频数据</span>
       </div>
       <div class="uvl_icon_rotate">
-        <div class="iconfont icon-xiala1 icon_rotate" :class="{icon_xiala: videoHide}"></div>
+        <div
+          class="iconfont icon-xiala1 icon_rotate"
+          :class="{ icon_xiala: videoHide }"
+        ></div>
       </div>
     </div>
     <div class="uvl_small_title" v-show="videoHide">
@@ -58,6 +67,14 @@ export default {
     };
   },
   methods: {
+    //前往主页
+    gotoFirstPage() {
+      this.$router.push("/uploadVideo/firstPage");
+    },
+    //前往视频合集
+    gotoAggregateMessage() {
+      this.$router.push("/uploadVideo/aggregateMessage");
+    },
     //前往发布视频
     gotoReleaseVideo() {
       this.$router.push("/uploadVideo");
@@ -158,14 +175,14 @@ export default {
       margin-right: 0.5rem;
     }
     .uvl_icon_rotate {
-        .icon_rotate {
-            transition: all 0.1s ease-in-out;
-        }
+      .icon_rotate {
+        transition: all 0.1s ease-in-out;
+      }
     }
   }
 }
 
 .icon_xiala {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 </style>

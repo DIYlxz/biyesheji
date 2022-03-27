@@ -29,7 +29,6 @@ const routes = [
   },
   {
     path: "/uploadVideo",
-    name: "UploadVideo",
     component: () => import("../views/UploadVideo/index.vue"),
     children: [{
       path: "",
@@ -37,6 +36,12 @@ const routes = [
     },{
       path: "contentMessage",
       component: () => import("../components/releaseVideo/ContentMessage.vue"),
+    },{
+      path: "aggregateMessage",
+      component: () => import("../components/releaseVideo/AggregateMessage.vue"),
+    },{
+      path: "firstPage",
+      component: () => import("../components/releaseVideo/FirstPage.vue"),
     }],
   },
 ]

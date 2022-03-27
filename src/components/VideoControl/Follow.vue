@@ -1,7 +1,7 @@
 <template>
   <div class="follow">
     <div class="followBox">
-      <img src="../../assets/images/LoginImg/01.jpg" class="follow_img" />
+      <img src="https://p6-passport.byteacctimg.com/img/user-avatar/75402678e113515a279ab9be0a8d993c~200x200.image" class="follow_img" />
       <div class="followBtn">
         <span class="iconfont icon-jia fb_icon"></span>
       </div>

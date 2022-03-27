@@ -4,8 +4,6 @@
       <my-input></my-input>
     </div>
     <div class="ht-right">
-      <div class="htr-general">关于软件</div>
-      <div class="htr-general">创作者服务</div>
       <div class="htr-general">
         <div
           v-if="ac"
@@ -23,19 +21,19 @@
               <div class="ustBox">
                 <div class="ustbSelect">
                   <div class="iconfont icon-shipin ustbIcon ustbi1"></div>
-                  <div class="ustbNum">0</div>
+                  <div class="ustbNum">{{user.worksNum}}</div>
                   <div>我的作品</div>
                 </div>
                 <div class="ustbBorder"></div>
                 <div class="ustbSelect">
                   <div class="iconfont icon-xihuan ustbIcon ustbi2"></div>
-                  <div class="ustbNum">0</div>
+                  <div class="ustbNum">{{user.loveNum}}</div>
                   <div>我的喜欢</div>
                 </div>
                 <div class="ustbBorder"></div>
                 <div class="ustbSelect">
                   <div class="iconfont icon-shoucangxiao ustbIcon ustbi3"></div>
-                  <div class="ustbNum">0</div>
+                  <div class="ustbNum">{{user.collectionNum}}</div>
                   <div>我的收藏</div>
                 </div>
               </div>
