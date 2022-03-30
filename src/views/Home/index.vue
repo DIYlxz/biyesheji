@@ -18,14 +18,39 @@
 import HomeLeft from "./HomeLeft";
 import HomeTop from "./HomeTop";
 import HomeVideo from "./HomeVideo";
-import { mapState } from "vuex";
+import { mapState,mapMutations } from "vuex";
+import { sendGet, sendPost } from '../../api/reqWay';
 
 export default {
   name: "Home",
   computed: {
     ...mapState({
       backColor: (state) => state.appSet.backColor,
+      user: (state) => state.login.user,
     }),
+  },
+  created() {
+    this.removeVideoInfo();
+    this.getVideoData();
+    this.getLoveNum();
+  },
+  methods: {
+    ...mapMutations("video",["setVideoInfo", "removeVideoInfo"]),
+    ...mapMutations("login",["setUserGoodNum"]),
+    //请求获取视频资源
+    getVideoData() {
+      sendGet("/videoData").then(data=>{
+        this.setVideoInfo(data.info);
+      })
+    },
+    //获取喜爱数量
+    getLoveNum() {
+      sendPost("/getGoodNum", {
+        dyNumber: this.user.dyNumber,
+      }).then(data=>{
+        this.setUserGoodNum(data.loveNum);
+      })
+    },
   },
   components: {
     HomeLeft,

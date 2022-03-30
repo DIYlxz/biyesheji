@@ -48,6 +48,7 @@ export default {
   },
   methods: {
     ...mapMutations("login", ["setUser"]),
+    //登录信息
     reqLoginData() {
       sendPost("/login", {
         userName: this.userName,
@@ -55,13 +56,13 @@ export default {
       })
         .then((data) => {
           if (data.access) {
-            console.log(data);
             this.$message({
               message: "登陆成功",
               type: "success",
             });
             this.setUser({
               userName: this.userName,
+              password: this.password,
               hpImg: "../../assets/images/LoginImg/01.jpg",
               access: data.access,
               //名称
@@ -76,8 +77,6 @@ export default {
               followNums: data.followNums,
               //喜欢数量
               loveNum: data.loveNum,
-              //评论数量
-              commentNum: data.commentNum,
               //收藏数
               collectionNum: data.collectionNum,
               //点赞数量

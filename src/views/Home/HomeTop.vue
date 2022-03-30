@@ -27,7 +27,7 @@
                 <div class="ustbBorder"></div>
                 <div class="ustbSelect">
                   <div class="iconfont icon-xihuan ustbIcon ustbi2"></div>
-                  <div class="ustbNum">{{user.loveNum}}</div>
+                  <div class="ustbNum">{{userGoodNum}}</div>
                   <div>我的喜欢</div>
                 </div>
                 <div class="ustbBorder"></div>
@@ -73,6 +73,7 @@ export default {
     ...mapState({
       user: (state) => state.login.user,
       backColor: (state) => state.appSet.backColor,
+      userGoodNum: (state) => state.login.userGoodNum,
     }),
   },
   created() {

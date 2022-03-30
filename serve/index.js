@@ -8,12 +8,12 @@ const bodyParser = require('koa-bodyparser')
 
 const router = new Router()
 
-
+//登录请求
 router.post('/login', async (ctx, next) => {
   let data = ctx.request.body;
   let sql = `SELECT * FROM user WHERE userName='${data.userName}' AND password='${data.password}'`;
   const result = await db.sqlUser(sql);
-  if(result.status == 200) {
+  if (result.status == 200) {
     ctx.body = {
       code: 200,
       access: true,
@@ -28,17 +28,125 @@ router.post('/login', async (ctx, next) => {
       followNums: result.results.followNums,
       //喜欢数量
       loveNum: result.results.loveNum,
-      //评论数量
-      commentNum: result.results.commentNum,
       //收藏数
       collectionNum: result.results.collectionNum,
       //点赞数
       goodNum: result.results.goodNum,
     };
-  }else {
+  } else {
     ctx.body = {
       msg: "账号密码错误",
       access: false,
+      code: 400,
+    }
+  }
+})
+
+//视频资源请求
+router.get("/videoData", async (ctx, next) => {
+  let sql = `SELECT * FROM videoInfo`;
+  const result = await db.videoData(sql);
+  if (result.status == 200) {
+    let res = result.results;
+    ctx.body = {
+      code: 200,
+      info: res,
+    }
+  } else {
+    ctx.body = {
+      msg: "没有视频",
+      code: 400,
+    }
+  }
+})
+
+//评论资源请求
+router.post("/curComment", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM comment WHERE videoId='${data.videoId}'`
+  const result = await db.commentData(sql, data.videoId);
+  if (result.status == 200) {
+    let res = result.results;
+    ctx.body = {
+      code: 200,
+      info: res,
+    }
+  } else {
+    ctx.body = {
+      msg: "没有评论",
+      code: 400,
+    }
+  }
+})
+
+//添加评论请求
+router.post("/addComment", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `INSERT INTO comment(dyNumber,videoId,cmtTalkAbout,cmtGoodNum,cmtReply,cmtPrePeople,infoName) VALUES("${data.dyNumber}","${data.videoId}","${data.cmtTalkAbout}","${data.cmtGoodNum}","${data.cmtReply}","${data.cmtPrePeople}","${data.infoName}")`;
+  const result = await db.addComment(sql);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功录入",
+    }
+  } else {
+    ctx.body = {
+      msg: "录入失败",
+      code: 400,
+    }
+  }
+})
+
+//增加点赞请求
+router.post("/addGood", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT goodNum FROM videoInfo WHERE videoId="${data.videoId}"`;
+  const result = await db.addGoodNum(sql, data.videoId, data.dyNumber);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功录入",
+    }
+  } else {
+    ctx.body = {
+      msg: "录入失败",
+      code: 400,
+    }
+  }
+})
+
+//增加收藏请求
+router.post("/addCollection", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT collectionNum FROM videoInfo WHERE videoId="${data.videoId}"`;
+  const result = await db.addCollectionNum(sql, data.videoId);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功录入",
+    }
+  } else {
+    ctx.body = {
+      msg: "录入失败",
+      code: 400,
+    }
+  }
+})
+
+//获取喜爱数量
+router.post("/getGoodNum", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM loveVideo WHERE dyNumber="${data.dyNumber}"`;
+  const result = await db.sendLoveNum(sql);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功获取点赞",
+      loveNum: result.loveNum,
+    }
+  } else {
+    ctx.body = {
+      msg: "获取点赞错误",
       code: 400,
     }
   }
