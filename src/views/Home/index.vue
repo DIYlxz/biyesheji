@@ -18,8 +18,8 @@
 import HomeLeft from "./HomeLeft";
 import HomeTop from "./HomeTop";
 import HomeVideo from "./HomeVideo";
-import { mapState,mapMutations } from "vuex";
-import { sendGet, sendPost } from '../../api/reqWay';
+import { mapState, mapMutations } from "vuex";
+import { sendGet, sendPost } from "../../api/reqWay";
 
 export default {
   name: "Home",
@@ -33,23 +33,41 @@ export default {
     this.removeVideoInfo();
     this.getVideoData();
     this.getLoveNum();
+    this.getUserCollectionData();
   },
   methods: {
-    ...mapMutations("video",["setVideoInfo", "removeVideoInfo"]),
-    ...mapMutations("login",["setUserGoodNum"]),
+    ...mapMutations("video", ["setVideoInfo", "removeVideoInfo"]),
+    ...mapMutations("login", ["setUserGoodNum", "setCollectionInfo"]),
+    //当前用户收藏信息询问
+    getUserCollectionData() {
+      sendPost("/getUserCollection", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
+        if (data.code == 200) {
+          this.setCollectionInfo({
+            info: data.info,
+            len: data.len,
+          });
+        }
+      });
+    },
     //请求获取视频资源
     getVideoData() {
-      sendGet("/videoData").then(data=>{
-        this.setVideoInfo(data.info);
-      })
+      sendGet("/videoData").then((data) => {
+        if (data.code == 200) {
+          this.setVideoInfo(data.info);
+        }
+      });
     },
     //获取喜爱数量
     getLoveNum() {
       sendPost("/getGoodNum", {
         dyNumber: this.user.dyNumber,
-      }).then(data=>{
-        this.setUserGoodNum(data.loveNum);
-      })
+      }).then((data) => {
+        if (data.code == 200) {
+          this.setUserGoodNum(data.loveNum);
+        }
+      });
     },
   },
   components: {

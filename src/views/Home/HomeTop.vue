@@ -33,7 +33,7 @@
                 <div class="ustbBorder"></div>
                 <div class="ustbSelect">
                   <div class="iconfont icon-shoucangxiao ustbIcon ustbi3"></div>
-                  <div class="ustbNum">{{user.collectionNum}}</div>
+                  <div class="ustbNum">{{collectionInfo.len}}</div>
                   <div>我的收藏</div>
                 </div>
               </div>
@@ -74,6 +74,7 @@ export default {
       user: (state) => state.login.user,
       backColor: (state) => state.appSet.backColor,
       userGoodNum: (state) => state.login.userGoodNum,
+      collectionInfo: (state) => state.login.collectionInfo,
     }),
   },
   created() {

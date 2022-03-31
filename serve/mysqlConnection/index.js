@@ -185,6 +185,28 @@ function sendLoveNum(sql) {
     });
 }
 
+//获取收藏信息
+function getCollectionInfo(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result.length != 0) {
+                resolve({
+                    status: 200,
+                    info: result,
+                    len: result.length,
+                })
+            } else {
+                resolve({
+                    status: 400,
+                })
+            }
+        });
+    });
+}
+
 function endConnection() {
     connection.end();
 }
@@ -205,4 +227,6 @@ module.exports = {
     addCollectionNum,
     //获取点赞数量
     sendLoveNum,
+    //获取收藏信息
+    getCollectionInfo,
 }

@@ -125,6 +125,30 @@ export default {
         {
           name: "001",
           id: "4d",
+          videoId: "4d",
+          video: require("../../assets/video/test/000004.mp4"),
+          //评论开关
+          commentSwich: false,
+          //视频评论总数
+          commentAllNum: 0,
+          //评论存放
+          commentArr: [],
+        },
+        {
+          name: "001",
+          id: "5d",
+          videoId: "5d",
+          video: require("../../assets/video/test/000005.mp4"),
+          //评论开关
+          commentSwich: false,
+          //视频评论总数
+          commentAllNum: 0,
+          //评论存放
+          commentArr: [],
+        },
+        {
+          name: "001",
+          id: "6d",
           videoId: "1d",
           video: require("../../assets/video/test/000001.mp4"),
           //评论开关
@@ -249,12 +273,8 @@ export default {
         const homeVideo = document.querySelector(".homeVideo");
         const hv = document.querySelectorAll(".myVideoScorll");
         homeVideo.addEventListener("wheel", (e) => {
-          //滚轮向下滑动
-          //   if (e.deltaY < 0) {
-          //     console.log("向下滑");
-          //   }
           if (e.deltaY > 0) {
-            if (this.curVideo == 0 || this.curVideo == 1) {
+            if (this.curVideo == 0 || this.curVideo == 1 || this.curVideo == 2 || this.curVideo == 3) {
               hv.forEach((item) => {
                 item.style.transform = `translateY(${
                   -84.5 * (this.curVideo + 1)
@@ -268,6 +288,8 @@ export default {
               hv[1].style.transform = "translateY(0)";
               hv[2].style.transform = "translateY(0)";
               hv[3].style.transform = "translateY(0)";
+              hv[4].style.transform = "translateY(0)";
+              hv[5].style.transform = "translateY(0)";
               this.curVideo = -1;
             }
           }

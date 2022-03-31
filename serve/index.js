@@ -5,6 +5,7 @@ const Router = require('koa-router')
 const db = require("./mysqlConnection/index.js")
 //获取post要使用第三方插件
 const bodyParser = require('koa-bodyparser')
+const path = require("path");
 
 const router = new Router()
 
@@ -152,8 +153,29 @@ router.post("/getGoodNum", async (ctx, next) => {
   }
 })
 
+//获取收藏信息
+router.post("/getUserCollection", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM collectionVideo WHERE dyNumber="${data.dyNumber}"`;
+  let result = await db.getCollectionInfo(sql);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功获取",
+      info: result.info,
+      len: result.info.length,
+    }
+  } else {
+    ctx.body = {
+      msg: "获取错误",
+      code: 400,
+    }
+  }
+})
+
 
 app.use(bodyParser())
+app.use(require("koa-static")(path.join(__dirname) + "/static"))
 app.use(router.routes())
 //自动丰富响应头
 app.use(router.allowedMethods())
