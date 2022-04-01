@@ -12,7 +12,7 @@
           @mouseleave="unSetupUser"
         >
           <img
-            src="https://p6-passport.byteacctimg.com/img/user-avatar/75402678e113515a279ab9be0a8d993c~200x200.image"
+            :src="user.headPortrait"
             alt="无"
             class="imgSty"
           />

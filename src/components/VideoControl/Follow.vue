@@ -1,7 +1,7 @@
 <template>
   <div class="follow">
     <div class="followBox">
-      <img src="https://p6-passport.byteacctimg.com/img/user-avatar/75402678e113515a279ab9be0a8d993c~200x200.image" class="follow_img" />
+      <img :src="curVideoInfo" class="follow_img" />
       <div class="followBtn">
         <span class="iconfont icon-jia fb_icon"></span>
       </div>
@@ -10,8 +10,23 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Follow",
+  props: ["vimsg"],
+  computed: {
+    ...mapState("video", ["videoInfo"]),
+    //当前视频显示信息
+    curVideoInfo() {
+      let _len = this.videoInfo.length;
+      for (let i = 0; i < _len; i++) {
+        if (this.vimsg == this.videoInfo[i].videoId) {
+          return this.videoInfo[i].headPortrait;
+        }
+      }
+      return 0;
+    },
+  },
 };
 </script>
 

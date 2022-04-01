@@ -1,17 +1,17 @@
 <template>
   <div class="homeVideo">
     <div
-      v-for="(item, index) of locationData"
-      :key="item.id"
+      v-for="(item, index) of videoInfo"
+      :key="item.videoId"
       class="myVideoBox myVideoScorll"
     >
       <div class="hv_myVideo">
         <video class="hv_video" controls ref="myVideo">
-          <source :src="item.video" type="video/mp4" />
+          <source :src="item.videoSrc" type="video/mp4" />
           浏览器不支持 video 标签
         </video>
         <div class="hv_interaction">
-          <follow></follow>
+          <follow :vimsg="item.videoId"></follow>
           <div @click="goodOperation($event, item.videoId)">
             <like :vimsg="item.videoId"></like>
           </div>
@@ -27,11 +27,11 @@
       <div class="hv_commentBox" v-show="item.commentSwich">
         <div>
           <div class="hv_cb_title">
-            全部评论<span>(</span>{{ item.commentAllNum }}<span>)</span>
+            全部评论<span>(</span>{{ item.commentNum }}<span>)</span>
           </div>
           <div
-            v-for="(part, index) of item.commentArr"
-            :key="part.infoName + index"
+            v-for="(part, indexP) of item.commentArr"
+            :key="part.infoName + indexP"
           >
             <div class="hv_cb_name">{{ part.infoName || "" }}：</div>
 
@@ -54,7 +54,7 @@
           />
           <div
             class="hv_cb_icon_box"
-            @click="uploadComment($event, item.videoId)"
+            @click="uploadComment($event, item.videoId, index)"
           >
             <div class="iconfont icon-shangchuan hv_cb_icon_shangchuan"></div>
           </div>
@@ -84,87 +84,10 @@ export default {
       curVideo: 0,
       //请求的视频源
       videoData: [],
-      //本地资源
-      locationData: [
-        {
-          name: "001",
-          id: "1d",
-          videoId: "1d",
-          video: require("../../assets/video/test/000001.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-        {
-          name: "001",
-          id: "2d",
-          videoId: "2d",
-          video: require("../../assets/video/test/000002.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-        {
-          name: "001",
-          id: "3d",
-          videoId: "3d",
-          video: require("../../assets/video/test/000003.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-        {
-          name: "001",
-          id: "4d",
-          videoId: "4d",
-          video: require("../../assets/video/test/000004.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-        {
-          name: "001",
-          id: "5d",
-          videoId: "5d",
-          video: require("../../assets/video/test/000005.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-        {
-          name: "001",
-          id: "6d",
-          videoId: "1d",
-          video: require("../../assets/video/test/000001.mp4"),
-          //评论开关
-          commentSwich: false,
-          //视频评论总数
-          commentAllNum: 0,
-          //评论存放
-          commentArr: [],
-        },
-      ],
     };
   },
   created() {
     this.mouseScrollListen();
-    this.curVideoInfo();
-    this.getCommentData();
   },
   computed: {
     ...mapState("login", ["user"]),
@@ -172,6 +95,17 @@ export default {
   },
   methods: {
     ...mapMutations("video", ["setVideoInfo"]),
+    ...mapMutations("login", ["setUserGoodNum", "setCollectionInfo"]),
+    //获取喜爱数量
+    getLoveNum() {
+      sendPost("/getGoodNum", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
+        if (data.code == 200) {
+          this.setUserGoodNum(data.loveNum);
+        }
+      });
+    },
     //增添收藏
     addCollectionNum(e, videoId) {
       sendPost("/addCollection", {
@@ -179,16 +113,57 @@ export default {
         dyNumber: this.user.dyNumber,
       }).then((data) => {
         if (data.code == 200) {
-          this.getCommentData();
-          sendGet("/videoData").then((data) => {
-            this.setVideoInfo(data.info);
+          this.getVideoData();
+          this.getUserCollectionData();
+        }
+      });
+    },
+    //当前用户收藏信息询问
+    getUserCollectionData() {
+      sendPost("/getUserCollection", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
+        if (data.code == 200) {
+          this.setCollectionInfo({
+            info: data.info,
+            len: data.len,
           });
         }
       });
     },
+    //请求获取视频资源
+    getVideoData() {
+      sendGet("/videoData").then((data) => {
+        if (data.code == 200) {
+          //处理评论
+          let len = data.info.length;
+          let len2 = data.commentArr.length;
+          for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len2; j++) {
+              if (data.info[i].videoId == data.commentArr[j].videoId) {
+                if (!data.info[i].commentArr) {
+                  data.info[i].commentArr = [];
+                }
+                data.info[i].commentArr.push(data.commentArr[j]);
+              }
+            }
+            data.info[i].commentSwich = false;
+          }
+          this.setVideoInfo(data.info);
+        }
+      });
+    },
+    //更新评论信息
+    curCommentData(videoId, index) {
+      sendPost("/curComment", {
+        videoId,
+      }).then(() => {
+        this.openComment({}, index);
+        this.getVideoData();
+      });
+    },
     //上传评论
-    uploadComment(e, videoId) {
-      console.log(videoId);
+    uploadComment(e, videoId, index) {
       sendPost("/addComment", {
         dyNumber: this.user.dyNumber,
         infoName: this.user.infoName,
@@ -200,11 +175,7 @@ export default {
       }).then((data) => {
         if (data.code == 200) {
           this.commentValue = "";
-          this.getCommentData();
-          sendGet("/videoData").then((data) => {
-            this.setVideoInfo(data.info);
-            this.curVideoInfo();
-          });
+          this.curCommentData(videoId, index);
         }
       });
     },
@@ -215,53 +186,18 @@ export default {
         dyNumber: this.user.dyNumber,
       }).then((data) => {
         if (data.code == 200) {
-          this.getCommentData();
-          sendGet("/videoData").then((data) => {
-            this.setVideoInfo(data.info);
-          });
+          this.getVideoData();
+          this.getLoveNum();
         }
       });
     },
-    //获取评论信息
-    getCommentData() {
-      let _len1 = this.locationData.length;
-      for (let i = 0; i < _len1; i++) {
-        this.locationData[i].commentArr = [];
-        sendPost("/curComment", {
-          videoId: this.locationData[i].videoId,
-        }).then((data) => {
-          if (data.code != 400) {
-            let info = data.info;
-            for (let j = 0; j < info.length; j++) {
-              this.locationData[i].commentArr.push({
-                infoName: info[j].infoName,
-                cmtTalkAbout: info[j].cmtTalkAbout,
-              });
-            }
-          }
-        });
-      }
-    },
-    //视频信息
-    curVideoInfo() {
-      let _len1 = this.videoInfo.length;
-      let _len2 = this.locationData.length;
-      for (let i = 0; i < _len2; i++) {
-        for (let j = 0; j < _len1; j++) {
-          if (this.locationData[i].videoId == this.videoInfo[j].videoId) {
-            this.locationData[i].commentAllNum = this.videoInfo[j].commentNum;
-          }
-        }
-      }
-    },
     //展开评论
     openComment(e, index) {
-      this.locationData[index].commentSwich = this.locationData[index]
-        .commentSwich
+      this.videoInfo[index].commentSwich = this.videoInfo[index].commentSwich
         ? false
         : true;
       let hv = document.querySelectorAll(".hv_video")[index];
-      if (this.locationData[index].commentSwich) {
+      if (this.videoInfo[index].commentSwich) {
         hv.style.width = "60vw";
       } else {
         hv.style.width = "90vw";
@@ -274,7 +210,12 @@ export default {
         const hv = document.querySelectorAll(".myVideoScorll");
         homeVideo.addEventListener("wheel", (e) => {
           if (e.deltaY > 0) {
-            if (this.curVideo == 0 || this.curVideo == 1 || this.curVideo == 2 || this.curVideo == 3) {
+            if (
+              this.curVideo == 0 ||
+              this.curVideo == 1 ||
+              this.curVideo == 2 ||
+              this.curVideo == 3
+            ) {
               hv.forEach((item) => {
                 item.style.transform = `translateY(${
                   -84.5 * (this.curVideo + 1)
@@ -289,7 +230,6 @@ export default {
               hv[2].style.transform = "translateY(0)";
               hv[3].style.transform = "translateY(0)";
               hv[4].style.transform = "translateY(0)";
-              hv[5].style.transform = "translateY(0)";
               this.curVideo = -1;
             }
           }
@@ -311,6 +251,7 @@ export default {
   .myVideoBox {
     position: relative;
     display: flex;
+    justify-content: space-between;
     .hv_myVideo {
       position: relative;
       height: 80vh;

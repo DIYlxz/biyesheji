@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="mpbrContent">
-      <div class="iconfont icon-zanwuzuopin mpbrc_icon"></div>
+      <!-- <router-view></router-view> -->
     </div>
   </div>
 </template>

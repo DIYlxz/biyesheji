@@ -29,7 +29,7 @@ function sqlUser(sql) {
         });
     });
 }
-//视频信息
+//视频信息:获取视频然后获取评论
 function videoData(sql) {
     return new Promise((resolve, reject) => {
         connection.query(sql, function (err, result) {
@@ -37,9 +37,19 @@ function videoData(sql) {
                 reject(err);
             }
             if (result.length != 0) {
-                resolve({
-                    status: 200,
-                    results: result,
+                //获取评论数组
+                let sql2 = `SELECT * FROM comment`;
+                connection.query(sql2, function (err, result2) {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (result2) {
+                        resolve({
+                            status: 200,
+                            results: result,
+                            commentArr: result2,
+                        })
+                    }
                 })
             } else {
                 resolve({
@@ -138,7 +148,7 @@ function addGoodNum(sql, videoId, dyNumber) {
 }
 
 //收藏增加
-function addCollectionNum(sql, videoId) {
+function addCollectionNum(sql, videoId, dyNumber) {
     return new Promise((resolve, reject) => {
         connection.query(sql, function (err, result) {
             if (err) {
@@ -152,6 +162,26 @@ function addCollectionNum(sql, videoId) {
                         reject(err);
                     }
                 });
+                //检测收藏是否存在
+                let sql3 = `SELECT dyNumber FROM collectionVideo WHERE videoId="${videoId}"`;
+                connection.query(sql3, function (err, result) {
+                    if (err) {
+                        reject(err);
+                    }
+                    if (result) {
+                        for (let i = 0; i < result.length; i++) {
+                            if (result[i].dyNumber == dyNumber) {
+                                return;
+                            }
+                        }
+                        let sql4 = `INSERT INTO collectionVideo(dyNumber, videoId) VALUES("${dyNumber}","${videoId}")`;
+                        connection.query(sql4, function (err, result) {
+                            if (err) {
+                                reject(err);
+                            }
+                        })
+                    }
+                })
                 resolve({
                     status: 200,
                 });

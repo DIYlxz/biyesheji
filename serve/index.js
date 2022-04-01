@@ -5,9 +5,11 @@ const Router = require('koa-router')
 const db = require("./mysqlConnection/index.js")
 //获取post要使用第三方插件
 const bodyParser = require('koa-bodyparser')
+//静态资源获取
+const serve = require('koa-static');
 const path = require("path");
 
-const router = new Router()
+const router = new Router();
 
 //登录请求
 router.post('/login', async (ctx, next) => {
@@ -33,6 +35,8 @@ router.post('/login', async (ctx, next) => {
       collectionNum: result.results.collectionNum,
       //点赞数
       goodNum: result.results.goodNum,
+      //头像地址
+      headPortrait: result.results.headPortrait,
     };
   } else {
     ctx.body = {
@@ -48,10 +52,10 @@ router.get("/videoData", async (ctx, next) => {
   let sql = `SELECT * FROM videoInfo`;
   const result = await db.videoData(sql);
   if (result.status == 200) {
-    let res = result.results;
     ctx.body = {
       code: 200,
-      info: res,
+      info: result.results,
+      commentArr: result.commentArr,
     }
   } else {
     ctx.body = {
@@ -67,10 +71,8 @@ router.post("/curComment", async (ctx, next) => {
   let sql = `SELECT * FROM comment WHERE videoId='${data.videoId}'`
   const result = await db.commentData(sql, data.videoId);
   if (result.status == 200) {
-    let res = result.results;
     ctx.body = {
       code: 200,
-      info: res,
     }
   } else {
     ctx.body = {
@@ -120,7 +122,7 @@ router.post("/addGood", async (ctx, next) => {
 router.post("/addCollection", async (ctx, next) => {
   let data = ctx.request.body;
   let sql = `SELECT collectionNum FROM videoInfo WHERE videoId="${data.videoId}"`;
-  const result = await db.addCollectionNum(sql, data.videoId);
+  const result = await db.addCollectionNum(sql, data.videoId, data.dyNumber);
   if (result.status == 200) {
     ctx.body = {
       code: 200,
@@ -174,11 +176,11 @@ router.post("/getUserCollection", async (ctx, next) => {
 })
 
 
-app.use(bodyParser())
-app.use(require("koa-static")(path.join(__dirname) + "/static"))
-app.use(router.routes())
+app.use(bodyParser());
+app.use(serve(path.join(__dirname) + "/static"));
+app.use(router.routes());
 //自动丰富响应头
-app.use(router.allowedMethods())
+app.use(router.allowedMethods());
 
 // mysql.endConnection();
 

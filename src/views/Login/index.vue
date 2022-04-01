@@ -81,6 +81,8 @@ export default {
               collectionNum: data.collectionNum,
               //点赞数量
               goodNum: data.goodNum,
+              //头像
+              headPortrait: data.headPortrait,
             });
             this.hhp = true;
             this.$router.push("/home");

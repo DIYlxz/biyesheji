@@ -25,7 +25,11 @@ const routes = [
   {
     path: "/mainPage",
     name: "MainPage",
-    component: () => import("../views/MainPage/index.vue")
+    component: () => import("../views/MainPage/index.vue"),
+    // children: [{
+    //   path: "",
+    //   component: () => import("../components/MainPage/WorksList.vue"),
+    // }],
   },
   {
     path: "/uploadVideo",
@@ -42,6 +46,9 @@ const routes = [
     },{
       path: "firstPage",
       component: () => import("../components/releaseVideo/FirstPage.vue"),
+    },{
+      path: "overviewData",
+      component: () => import("../components//releaseVideo/OverviewData.vue"),
     }],
   },
 ]

@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="uvl_small_title" v-show="videoHide">
-      <div class="uvl_all_small_title">数据总览</div>
+      <div class="uvl_all_small_title" @click="gotoOverviewData">数据总览</div>
       <div class="uvl_all_small_title">作品数据</div>
       <div class="uvl_all_small_title">创作周报</div>
     </div>
@@ -67,6 +67,10 @@ export default {
     };
   },
   methods: {
+    //前往数据总览
+    gotoOverviewData() {
+      this.$router.push("/uploadVideo/overviewData");
+    },
     //前往主页
     gotoFirstPage() {
       this.$router.push("/uploadVideo/firstPage");

@@ -55,6 +55,21 @@ export default {
     getVideoData() {
       sendGet("/videoData").then((data) => {
         if (data.code == 200) {
+          console.log(data);
+          //处理评论
+          let len = data.info.length;
+          let len2 = data.commentArr.length;
+          for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len2; j++) {
+              if (data.info[i].videoId == data.commentArr[j].videoId) {
+                if (!data.info[i].commentArr) {
+                  data.info[i].commentArr = [];
+                }
+                data.info[i].commentArr.push(data.commentArr[j]);
+              }
+            }
+            data.info[i].commentSwich = false;
+          }
           this.setVideoInfo(data.info);
         }
       });
