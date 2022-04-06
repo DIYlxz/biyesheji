@@ -12,7 +12,10 @@
       <el-upload
         class="upload-demo"
         drag
-        action="https://jsonplaceholder.typicode.com/posts/"
+        :show-file-list="false"
+        :on-success="handleVideoSuccess"
+        action="http://localhost:8010/uploadVideo"
+
         multiple
       >
         <i class="el-icon-upload"></i>
@@ -59,6 +62,20 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    //定义上传之前文件是什么
+    // beforeUploadVideo(file) {
+    //   const formatArr = ['video/mp4', 'video/ogg','video/flv','video/avi','video/wmv','video/rmvb'];
+    //   if(formatArr.indexOf(file.type) == -1) {
+    //     this.$message.error("请上传正确的视频格式");
+    //     return false;
+    //   }
+    // }, 
+    //上传成功
+    handleVideoSuccess(res, file) {
+      console.log(res, file);
+    }, 
   },
 };
 </script>

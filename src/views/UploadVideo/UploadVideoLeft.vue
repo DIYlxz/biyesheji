@@ -42,8 +42,8 @@
     </div>
     <div class="uvl_small_title" v-show="videoHide">
       <div class="uvl_all_small_title" @click="gotoOverviewData">数据总览</div>
-      <div class="uvl_all_small_title">作品数据</div>
-      <div class="uvl_all_small_title">创作周报</div>
+      <div class="uvl_all_small_title" @click="gotoWorksData">作品数据</div>
+      <div class="uvl_all_small_title" @click="gotoCreateWeek">创作周报</div>
     </div>
     <div class="uvl_help_center uvl_title_box">
       <div>
@@ -67,6 +67,14 @@ export default {
     };
   },
   methods: {
+    //创作周报
+    gotoCreateWeek() {
+      this.$router.push("/uploadVideo/createWeek");
+    },
+    //前往作品数据
+    gotoWorksData() {
+      this.$router.push("/uploadVideo/worksData");
+    },
     //前往数据总览
     gotoOverviewData() {
       this.$router.push("/uploadVideo/overviewData");

@@ -37,18 +37,25 @@ const routes = [
     children: [{
       path: "",
       component: () => import("../views/UploadVideo/UploadVideoRight.vue"),
-    },{
+    }, {
       path: "contentMessage",
       component: () => import("../components/releaseVideo/ContentMessage.vue"),
-    },{
+    }, {
       path: "aggregateMessage",
       component: () => import("../components/releaseVideo/AggregateMessage.vue"),
-    },{
+    }, {
       path: "firstPage",
       component: () => import("../components/releaseVideo/FirstPage.vue"),
-    },{
+    }, {
       path: "overviewData",
-      component: () => import("../components//releaseVideo/OverviewData.vue"),
+      component: () => import("../components/releaseVideo/OverviewData.vue"),
+    }, {
+      path: "worksData",
+      component: () => import("../components/releaseVideo/WorksData.vue"),
+    }
+      , {
+      path: "createWeek",
+      component: () => import("../components/releaseVideo/CreateWeek.vue"),
     }],
   },
 ]

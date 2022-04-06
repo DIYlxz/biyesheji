@@ -7,10 +7,37 @@ const db = require("./mysqlConnection/index.js")
 const bodyParser = require('koa-bodyparser')
 //静态资源获取
 const serve = require('koa-static');
+//路径获取
 const path = require("path");
+//解析文件
+const multer = require("koa-multer");
+//文件模块
+const fs = require("fs");
 
 const router = new Router();
 
+//上传文件存放路径
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '/static/video'))
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${file.originalname}`)
+  }
+})
+const upload = multer({storage});
+
+//跨域问题
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  if (ctx.method == 'OPTIONS') {
+    ctx.body = 200;
+  } else {
+    await next();
+  }
+});
 //登录请求
 router.post('/login', async (ctx, next) => {
   let data = ctx.request.body;
@@ -175,6 +202,12 @@ router.post("/getUserCollection", async (ctx, next) => {
   }
 })
 
+//视频上传
+router.post("/uploadVideo", upload.single("file"), async (ctx, next) => {
+  ctx.body = {
+    code: 200,
+  }
+})
 
 app.use(bodyParser());
 app.use(serve(path.join(__dirname) + "/static"));
