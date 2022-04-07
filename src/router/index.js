@@ -58,6 +58,16 @@ const routes = [
       component: () => import("../components/releaseVideo/CreateWeek.vue"),
     }],
   },
+  {
+    path: "/record",
+    name: "Record",
+    component: () => import("../views/Record/index.vue"),
+  },
+  {
+    path: "/luxiang",
+    name: "Luxiang",
+    component: () => import("../views/Luxiang/index.vue"),
+  },
 ]
 
 const router = new VueRouter({

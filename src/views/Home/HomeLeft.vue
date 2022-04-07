@@ -4,11 +4,11 @@
     <div class="iconfont icon-shouye hliconSty">
       <div class="hl_text">首页</div>
     </div>
-    <div class="iconfont icon-tuijian hliconSty">
-      <div class="hl_text">推荐</div>
+    <div class="iconfont icon-tuijian hliconSty" @click="gotoRecord">
+      <div class="hl_text">拍照</div>
     </div>
-    <div class="iconfont icon-zhibo hliconSty">
-      <div class="hl_text">直播</div>
+    <div class="iconfont icon-zhibo hliconSty" @click="gotoLuxiang">
+      <div class="hl_text">录像</div>
     </div>
   </div>
 </template>
@@ -16,6 +16,14 @@
 <script>
 export default {
   name: "HomeLeft",
+  methods: {
+    gotoRecord() {
+      this.$router.push("/record");
+    },
+    gotoLuxiang() {
+      this.$router.push("/luxiang");
+    }
+  },
 };
 </script>
 

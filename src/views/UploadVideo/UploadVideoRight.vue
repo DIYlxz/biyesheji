@@ -15,7 +15,6 @@
         :show-file-list="false"
         :on-success="handleVideoSuccess"
         action="http://localhost:8010/uploadVideo"
-
         multiple
       >
         <i class="el-icon-upload"></i>
