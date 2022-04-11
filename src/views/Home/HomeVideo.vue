@@ -21,7 +21,9 @@
           <div @click="addCollectionNum($event, item.videoId)">
             <collection :vimsg="item.videoId"></collection>
           </div>
-          <share></share>
+          <div @click="shareOpen($event, item.videoSrc)">
+            <share></share>
+          </div>
         </div>
       </div>
       <div class="hv_commentBox" v-show="item.commentSwich">
@@ -61,6 +63,28 @@
         </div>
       </div>
     </div>
+    <el-dialog
+      title="分享点滴"
+      :visible.sync="dialogVisible"
+      width="40%"
+      :before-close="handleClose"
+    >
+      <div>
+        <el-select v-model="fansName" placeholder="请选择分享对象">
+          <el-option
+            v-for="item in fansInfo"
+            :key="item.fansName"
+            :label="item.fansName"
+            :value="item.fansDyNumber"
+          >
+          </el-option>
+        </el-select>
+      </div>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleClose">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -84,6 +108,10 @@ export default {
       curVideo: 0,
       //请求的视频源
       videoData: [],
+      //分享框
+      dialogVisible: false,
+      //当前粉丝
+      fansName: "",
     };
   },
   created() {
@@ -92,10 +120,39 @@ export default {
   computed: {
     ...mapState("login", ["user"]),
     ...mapState("video", ["videoInfo"]),
+    ...mapState("fans", ["fansInfo"]),
   },
   methods: {
     ...mapMutations("video", ["setVideoInfo"]),
     ...mapMutations("login", ["setUserGoodNum", "setCollectionInfo"]),
+    ...mapMutations("fans", ["setFansInfo", "setShareUrl"]),
+    //点击分享
+    shareOpen(e, videoUrl) {
+      sendPost("/getFans", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
+        this.dialogVisible = true;
+        let arr = [];
+        let len = data.info.length;
+        for (let i = 0; i < len; i++) {
+          arr.push({
+            fansDyNumber: data.info[i].fansDyNumber,
+            fansName: data.info[i].fansName,
+          });
+        }
+        this.setFansInfo(arr);
+        this.setShareUrl(videoUrl);
+      });
+    },
+    //分享点击确定
+    handleClose() {
+      this.dialogVisible = false;
+      this.$message({
+        message: "成功转发",
+        type: "success",
+      });
+      this.$router.push("/chartRoom");
+    },
     //获取喜爱数量
     getLoveNum() {
       sendPost("/getGoodNum", {
@@ -208,14 +265,10 @@ export default {
       this.$nextTick(() => {
         const homeVideo = document.querySelector(".homeVideo");
         const hv = document.querySelectorAll(".myVideoScorll");
+        let len = this.videoInfo.length;
         homeVideo.addEventListener("wheel", (e) => {
           if (e.deltaY > 0) {
-            if (
-              this.curVideo == 0 ||
-              this.curVideo == 1 ||
-              this.curVideo == 2 ||
-              this.curVideo == 3
-            ) {
+            if (len - this.curVideo > 1) {
               hv.forEach((item) => {
                 item.style.transform = `translateY(${
                   -84.5 * (this.curVideo + 1)
@@ -223,13 +276,13 @@ export default {
               });
             } else {
               hv.forEach((item) => {
-                item.style.transform = "translateY(-338vh)";
+                item.style.transform = `translateY(${
+                  -84.5 * this.curVideo + 1
+                })`;
               });
-              hv[0].style.transform = "translateY(0)";
-              hv[1].style.transform = "translateY(0)";
-              hv[2].style.transform = "translateY(0)";
-              hv[3].style.transform = "translateY(0)";
-              hv[4].style.transform = "translateY(0)";
+              for (let i = 0; i < len; i++) {
+                hv[i].style.transform = "translateY(0)";
+              }
               this.curVideo = -1;
             }
           }

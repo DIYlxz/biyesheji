@@ -237,6 +237,64 @@ function getCollectionInfo(sql) {
     });
 }
 
+//上传地址存储
+function uploadVideoUrl(sql, dyNumber) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result.length != 0) {
+                let sql2 = `SELECT worksNum FROM user WHERE dyNumber="${dyNumber}"`;
+                connection.query(sql2, function (err, result) {
+                    if (err) {
+                        reject(err);
+                    }
+                    let initWorksNum = result[0].worksNum;
+                    let len = +(initWorksNum) + 1;
+                    let sql3 = `UPDATE user SET worksNum="${len}" WHERE dyNumber="${dyNumber}"`;
+                    connection.query(sql3, function (err, result) {
+                        if (err) {
+                            reject(err);
+                        }
+                    })
+                })
+                if (result.length != 0) {
+                    resolve({
+                        status: 200,
+                    })
+                } else {
+                    resolve({
+                        status: 400,
+                    })
+                }
+            }
+        });
+    });
+}
+
+//粉丝信息获取
+function fansInfo(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function (err, result) {
+            if (err) {
+                reject(err);
+            }
+            if (result.length != 0) {
+                resolve({
+                    status: 200,
+                    info: result,
+                    len: result.length,
+                })
+            } else {
+                resolve({
+                    status: 400,
+                })
+            }
+        });
+    });
+}
+
 function endConnection() {
     connection.end();
 }
@@ -259,4 +317,8 @@ module.exports = {
     sendLoveNum,
     //获取收藏信息
     getCollectionInfo,
+    //上传地址存储
+    uploadVideoUrl,
+    //粉丝信息获取
+    fansInfo,
 }

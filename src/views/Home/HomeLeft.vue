@@ -4,11 +4,14 @@
     <div class="iconfont icon-shouye hliconSty">
       <div class="hl_text">首页</div>
     </div>
-    <div class="iconfont icon-tuijian hliconSty" @click="gotoRecord">
+    <div class="iconfont icon-12paizhao-1 hliconSty" @click="gotoRecord">
       <div class="hl_text">拍照</div>
     </div>
     <div class="iconfont icon-zhibo hliconSty" @click="gotoLuxiang">
       <div class="hl_text">录像</div>
+    </div>
+    <div class="iconfont icon-liuyan hliconSty" @click="gotoChartRoom">
+      <div class="hl_text">留言</div>
     </div>
   </div>
 </template>
@@ -17,6 +20,9 @@
 export default {
   name: "HomeLeft",
   methods: {
+    gotoChartRoom() {
+      this.$router.push("/chartRoom");
+    },
     gotoRecord() {
       this.$router.push("/record");
     },

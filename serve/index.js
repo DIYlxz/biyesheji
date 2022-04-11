@@ -14,6 +14,25 @@ const multer = require("koa-multer");
 //文件模块
 const fs = require("fs");
 
+const user = [];
+
+//webSocket
+const server = require('http').createServer(app.callback());
+let io = require("socket.io")(server, { cors: true });
+io.on('connection', (socket) => {
+  // 监听客户端断开
+  socket.on('disconnect', () => {
+    console.log('客户端断开')
+  })
+  // 监听客户端消息
+  socket.on('hello', data => {
+    console.log('接收客户端发送数据', data)
+  })
+  socket.on('sendData', data => {
+    io.emit('recoverData', data)
+  })
+});
+
 const router = new Router();
 
 //上传文件存放路径
@@ -25,11 +44,11 @@ const storage = multer.diskStorage({
     cb(null, `${file.originalname}`)
   }
 })
-const upload = multer({storage});
+const upload = multer({ storage });
 
 //跨域问题
 app.use(async (ctx, next) => {
-  ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Origin', 'http://localhost:8080/');
   ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   if (ctx.method == 'OPTIONS') {
@@ -202,10 +221,52 @@ router.post("/getUserCollection", async (ctx, next) => {
   }
 })
 
-//视频上传
+//视频放入静态文件夹
 router.post("/uploadVideo", upload.single("file"), async (ctx, next) => {
+  let url = `http://localhost:8010/video/${ctx.req.file.originalname}`;
   ctx.body = {
     code: 200,
+    msg: "成功放入",
+    videoSrc: url,
+  }
+})
+
+//地址链接存储
+router.post("/uploadVideoForm", async (ctx, next) => {
+  let data = ctx.request.body;
+  let random = parseInt(Math.random() * 1000) + parseInt(Math.random() * 1000) + parseInt(Math.random() * 1000) + "d";
+  let sql = `INSERT INTO videoInfo(dyNumber,videoId,commentNum,goodNum,collectionNum,videoSrc,headPortrait) VALUES("${data.dyNumber}","${random}","0","0","0","${data.videoSrc}","${data.headPortrait}")`;
+  let result = await db.uploadVideoUrl(sql, data.dyNumber);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功保存",
+    }
+  } else {
+    ctx.body = {
+      msg: "保存错误",
+      code: 400,
+    }
+  }
+})
+
+//粉丝信息获取
+router.post("/getFans", async (ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM fans WHERE dyNumber=${data.dyNumber}`;
+  let result = await db.fansInfo(sql);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功获取",
+      info: result.info,
+      len: result.length,
+    }
+  } else {
+    ctx.body = {
+      msg: "获取失败",
+      code: 400,
+    }
   }
 })
 
@@ -217,6 +278,6 @@ app.use(router.allowedMethods());
 
 // mysql.endConnection();
 
-app.listen(8010, () => {
+server.listen(8010, () => {
   console.log('server is running at http://localhost:8010')
 })

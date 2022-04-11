@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import login from "./modules/login"
 import appSet from './modules/appSet';
 import video from './modules/video';
+import fans from "./modules/fans"
 import { actions } from './actions';
 
 Vue.use(Vuex)
@@ -13,5 +14,6 @@ export default new Vuex.Store({
     login,
     appSet,
     video,
+    fans,
   }
 })

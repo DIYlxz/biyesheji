@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "880162",
+      "name": "留言",
+      "font_class": "liuyan",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "1300030",
+      "name": "Take pictures-1",
+      "font_class": "12paizhao-1",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
       "icon_id": "5286718",
       "name": "上传",
       "font_class": "shangchuan",

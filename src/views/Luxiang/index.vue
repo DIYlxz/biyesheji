@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: "Luxiang",
   data() {
     return {
       mediaStreamTrack: {}, // 退出时关闭摄像头

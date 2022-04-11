@@ -55,7 +55,6 @@ export default {
     getVideoData() {
       sendGet("/videoData").then((data) => {
         if (data.code == 200) {
-          console.log(data);
           //处理评论
           let len = data.info.length;
           let len2 = data.commentArr.length;

@@ -15,6 +15,7 @@
         :show-file-list="false"
         :on-success="handleVideoSuccess"
         action="http://localhost:8010/uploadVideo"
+        :before-upload="beforeUploadVideo"
         multiple
       >
         <i class="el-icon-upload"></i>
@@ -42,6 +43,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { sendPost,sendGet } from "../../api/reqWay";
+import { mapMutations } from "vuex";
 export default {
   name: "UploadVideoRight",
   data() {
@@ -62,19 +66,62 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState("login", ["user"]),
+  },
   methods: {
+    ...mapMutations("video", ["setVideoInfo"]),
     //定义上传之前文件是什么
-    // beforeUploadVideo(file) {
-    //   const formatArr = ['video/mp4', 'video/ogg','video/flv','video/avi','video/wmv','video/rmvb'];
-    //   if(formatArr.indexOf(file.type) == -1) {
-    //     this.$message.error("请上传正确的视频格式");
-    //     return false;
-    //   }
-    // }, 
+    beforeUploadVideo(file) {
+      const formatArr = [
+        "video/mp4",
+        "video/ogg",
+        "video/flv",
+        "video/avi",
+        "video/wmv",
+        "video/rmvb",
+      ];
+      if (formatArr.indexOf(file.type) == -1) {
+        this.$message.error("请上传正确的视频格式");
+        return false;
+      }
+    },
+    //请求获取视频资源
+    getVideoData() {
+      sendGet("/videoData").then((data) => {
+        if (data.code == 200) {
+          //处理评论
+          let len = data.info.length;
+          let len2 = data.commentArr.length;
+          for (let i = 0; i < len; i++) {
+            for (let j = 0; j < len2; j++) {
+              if (data.info[i].videoId == data.commentArr[j].videoId) {
+                if (!data.info[i].commentArr) {
+                  data.info[i].commentArr = [];
+                }
+                data.info[i].commentArr.push(data.commentArr[j]);
+              }
+            }
+            data.info[i].commentSwich = false;
+          }
+          this.setVideoInfo(data.info);
+        }
+      });
+    },
     //上传成功
-    handleVideoSuccess(res, file) {
-      console.log(res, file);
-    }, 
+    handleVideoSuccess(res) {
+      sendPost("/uploadVideoForm", {
+        dyNumber: this.user.dyNumber,
+        videoSrc: res.videoSrc,
+        headPortrait: this.user.headPortrait,
+      }).then(() => {
+        this.getVideoData();
+      });
+      this.$message({
+        message: "恭喜你上传成功",
+        type: "success",
+      });
+    },
   },
 };
 </script>

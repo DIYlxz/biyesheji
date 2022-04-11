@@ -68,6 +68,11 @@ const routes = [
     name: "Luxiang",
     component: () => import("../views/Luxiang/index.vue"),
   },
+  {
+    path: "/chartRoom",
+    name: "ChartRoom",
+    component: () => import("../views/ChartRoom/index.vue"),
+  },
 ]
 
 const router = new VueRouter({
