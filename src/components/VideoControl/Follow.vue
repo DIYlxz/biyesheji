@@ -1,7 +1,7 @@
 <template>
   <div class="follow">
     <div class="followBox">
-      <img :src="curVideoInfo" class="follow_img" />
+      <img :src="curVideoInfo" class="follow_img" crossorigin />
       <div class="followBtn">
         <span class="iconfont icon-jia fb_icon"></span>
       </div>

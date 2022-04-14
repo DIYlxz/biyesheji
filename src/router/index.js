@@ -73,6 +73,11 @@ const routes = [
     name: "ChartRoom",
     component: () => import("../views/ChartRoom/index.vue"),
   },
+  {
+    path: "/editorVideo",
+    name: "EditorVideo",
+    component: () => import("../views/EditorVideo/index.vue"),
+  },
 ]
 
 const router = new VueRouter({

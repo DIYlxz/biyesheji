@@ -7,7 +7,9 @@ const service = axios.create({
     //响应超出时间
     timeout: 5000,
     headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Cross-Origin-Opener-Policy": "unsafe-none",
+        "Cross-Origin-Embedder-Policy": "unsafe-none",
     }
 });
 

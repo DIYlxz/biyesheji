@@ -6,6 +6,8 @@ import ElementUI from 'element-ui';
 import "element-ui/lib/theme-chalk/index.css";
 import VueSocketIO from 'vue-socket.io'
 import SocketIO from "socket.io-client"
+import NProgress from "nprogress"
+import "nprogress/nprogress.css"
 
 // socket 连接参数
 const socketOptions = {
@@ -59,7 +61,21 @@ Vue.use(
     store,          // 如果没有使用到store可以不用写
   })
 )
+NProgress.configure({
+  easing: "ease", // 动画方式
+  speed: 600, // 递增进度条的速度
+  showSpinner: true, // 是否显示加载ico
+  trickleSpeed: 200, // 自动递增间隔
+  minimum: 0.3 // 初始化时的最小百分比
+})
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  next()
+})
 
+router.afterEach(() => {
+  NProgress.done()
+})
 new Vue({
   // 这里为全局监听socket事件消息，监听函数这里只写了一点，其实很有很多事件。
   sockets: {

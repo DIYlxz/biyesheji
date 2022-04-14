@@ -15,6 +15,7 @@
             :src="user.headPortrait"
             alt="无"
             class="imgSty"
+            crossorigin
           />
           <div v-show="userSetup">
             <div class="userSetup">
@@ -152,7 +153,7 @@ export default {
           width: 20rem;
           height: 10rem;
           border-top: 0.2rem solid #fff;
-          top: 2.7rem;
+          top: 2rem;
           left: -5rem;
           background: rgb(248, 248, 248);
           z-index: 2;

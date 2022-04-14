@@ -13,6 +13,9 @@
     <div class="iconfont icon-liuyan hliconSty" @click="gotoChartRoom">
       <div class="hl_text">留言</div>
     </div>
+    <div class="iconfont icon-liuyan hliconSty" @click="gotoEditorVideo">
+      <div class="hl_text">编辑</div>
+    </div>
   </div>
 </template>
 
@@ -28,7 +31,10 @@ export default {
     },
     gotoLuxiang() {
       this.$router.push("/luxiang");
-    }
+    },
+    gotoEditorVideo() {
+      this.$router.push("/editorVideo");
+    },
   },
 };
 </script>

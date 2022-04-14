@@ -6,7 +6,7 @@
       class="myVideoBox myVideoScorll"
     >
       <div class="hv_myVideo">
-        <video class="hv_video" controls ref="myVideo">
+        <video class="hv_video" controls ref="myVideo" crossorigin>
           <source :src="item.videoSrc" type="video/mp4" />
           浏览器不支持 video 标签
         </video>
