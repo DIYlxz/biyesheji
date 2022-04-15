@@ -14,6 +14,8 @@ const multer = require("koa-multer");
 //文件模块
 const fs = require("fs");
 
+const cors = require("koa2-cors")
+
 const user = [];
 
 //webSocket
@@ -271,6 +273,7 @@ router.post("/getFans", async (ctx, next) => {
 })
 
 app.use(bodyParser());
+app.use(cors());
 app.use(serve(path.join(__dirname) + "/static"));
 app.use(router.routes());
 //自动丰富响应头

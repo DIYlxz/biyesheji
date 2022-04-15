@@ -8,8 +8,8 @@ const service = axios.create({
     timeout: 5000,
     headers: {
         "Content-Type": "application/json",
-        "Cross-Origin-Opener-Policy": "unsafe-none",
-        "Cross-Origin-Embedder-Policy": "unsafe-none",
+        // "Cross-Origin-Opener-Policy": "same-origin",
+        // "Cross-Origin-Embedder-Policy": "require-corp",
     }
 });
 

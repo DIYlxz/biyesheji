@@ -10,6 +10,7 @@
 </template>
 
 <script>
+//crossorigin
 import { mapState } from "vuex";
 export default {
   name: "Follow",
