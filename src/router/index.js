@@ -24,12 +24,11 @@ const routes = [
   },
   {
     path: "/mainPage",
-    name: "MainPage",
     component: () => import("../views/MainPage/index.vue"),
-    // children: [{
-    //   path: "",
-    //   component: () => import("../components/MainPage/WorksList.vue"),
-    // }],
+    children: [{
+      path: "",
+      component: () => import("../components/MainPage/WorksList.vue"),
+    }],
   },
   {
     path: "/uploadVideo",

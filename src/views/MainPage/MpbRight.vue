@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="mpbrContent">
-      <!-- <router-view></router-view> -->
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -48,8 +48,6 @@ export default {
   .mpbrContent {
     flex: 1 1 auto;
     display: flex;
-    justify-content: center;
-    align-items: center;
     .mpbrc_icon {
       font-size: 5rem;
       margin-bottom: 10rem;

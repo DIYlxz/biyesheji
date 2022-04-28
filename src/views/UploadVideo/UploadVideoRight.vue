@@ -64,6 +64,10 @@ export default {
           id: "dv",
         },
       ],
+      curHeaders: {
+        "Cross-Origin-Opener-Policy": "same-origin",
+        "Cross-Origin-Embedder-Policy": "require-corp",
+      },
     };
   },
   computed: {
@@ -71,6 +75,15 @@ export default {
   },
   methods: {
     ...mapMutations("video", ["setVideoInfo"]),
+    reqVideoSend(param) {
+      const file = new FormData();
+      file.append('file', param.file)
+      sendPost("/uploadVideo", {
+        file,
+      }).then(data => {
+        console.log(data);
+      })
+    },
     //定义上传之前文件是什么
     beforeUploadVideo(file) {
       const formatArr = [

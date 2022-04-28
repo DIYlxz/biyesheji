@@ -222,6 +222,7 @@ export default {
         this.$message.error("请先选择视频或者等待当前处理完毕");
       }
     },
+    //选择视频
     test(e) {
       let name = e.target.files[0].name;
       let myType = ["mp4", "avi"];

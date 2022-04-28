@@ -19,10 +19,10 @@
       <div class="lb_btn">
         <el-button type="primary" plain @click="reqLoginData">登录</el-button>
       </div>
-      <div class="lb_info_btn">
+      <!-- <div class="lb_info_btn">
         <div class="lb_btn_text">注册</div>
         <div class="lb_btn_text">忘记密码?</div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -101,11 +101,12 @@ export default {
 <style lang="scss" scoped>
 #login {
   display: flex;
-  width: 45rem;
+  width: 25rem;
   height: 20rem;
-  margin: 4rem auto;
+  margin: 10rem auto;
+  border: 0.01rem solid #e6e6e6;
   .login_box {
-    padding: 0 3rem;
+    padding: 1rem 3rem;
     margin: 0 auto;
     #userInput {
       .ut_input {

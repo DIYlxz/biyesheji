@@ -11,9 +11,9 @@
       <div class="hl_text">录像</div>
     </div>
     <div class="iconfont icon-liuyan hliconSty" @click="gotoChartRoom">
-      <div class="hl_text">留言</div>
+      <div class="hl_text">聊天</div>
     </div>
-    <div class="iconfont icon-liuyan hliconSty" @click="gotoEditorVideo">
+    <div class="iconfont icon-shipinjianji hliconSty" @click="gotoEditorVideo">
       <div class="hl_text">编辑</div>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
       this.$router.push("/luxiang");
     },
     gotoEditorVideo() {
-      this.$router.push("/editorVideo");
+      window.open("http://localhost:8081/");
     },
   },
 };

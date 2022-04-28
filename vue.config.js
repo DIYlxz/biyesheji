@@ -14,8 +14,8 @@ module.exports = {
     productionSourceMap: false,
     //代理
     devServer: {
-        headers: {"Cross-Origin-Opener-Policy": "same-origin","Cross-Origin-Embedder-Policy": "require-corp",},
         hotOnly: true,
+        port: 8080,
         proxy: {
             "/api": {
                 target: "http://localhost:8010",
