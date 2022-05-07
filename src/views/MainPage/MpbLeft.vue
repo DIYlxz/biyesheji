@@ -4,11 +4,11 @@
     <div class="mpbl_tt">
       <div class="mpbl_top">
         <div class="mpbl_top_img">
-          <img src="../../assets/images/LoginImg/01.jpg" class="mpbltiSty" />
+          <img :src="user.headPortrait" class="mpbltiSty" />
         </div>
         <div class="mpbl_top_part">
           <p>关注</p>
-          <p class="mpbltp_num">{{user.followNums || 0}}</p>
+          <p class="mpbltp_num">{{followInfo.length || 0}}</p>
         </div>
         <div class="mpbl_top_part_border"></div>
         <div class="mpbl_top_part">
@@ -35,7 +35,7 @@ export default {
   name: "MpbLeft",
   computed: {
     ...mapState("appSet", ["backColor"]),
-    ...mapState("login", ["user"]),
+    ...mapState("login", ["user", "followInfo"]),
   },
 };
 </script>

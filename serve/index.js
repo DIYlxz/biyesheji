@@ -199,6 +199,7 @@ router.post("/getGoodNum", async (ctx, next) => {
     ctx.body = {
       msg: "获取点赞错误",
       code: 400,
+      loveNum: 0,
     }
   }
 })
@@ -217,8 +218,10 @@ router.post("/getUserCollection", async (ctx, next) => {
     }
   } else {
     ctx.body = {
-      msg: "获取错误",
-      code: 400,
+      msg: "无数据",
+      code: 201,
+      info: [],
+      len: 0,
     }
   }
 })
@@ -268,6 +271,59 @@ router.post("/getFans", async (ctx, next) => {
     ctx.body = {
       msg: "获取失败",
       code: 400,
+    }
+  }
+})
+
+//关注人员获取
+router.post("/followPeo", async(ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM loveUser WHERE dyNumber=${data.dyNumber}`;
+  let result = await db.followsPeo(sql);
+  if (result.status == 200) {
+    ctx.body = {
+      code: 200,
+      msg: "成功获取",
+      info: result.info,
+      len: result.len,
+    }
+  } else {
+    ctx.body = {
+      info: [],
+      msg: "成功获取",
+      code: 201,
+    }
+  }
+})
+
+//添加关注
+router.post("/addFollow", async(ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `INSERT INTO loveUser(dyNumber,loveDyNumber) VALUES("${data.dyNumber}","${data.loveDyNumber}")`;
+  const result = await db.addFollow(sql);
+  if(result.status == 200) {
+    ctx.body = {
+      code: 200,
+    }
+  }else {
+    ctx.body = {
+      code: 201
+    }
+  }
+})
+
+//更新关注
+router.post("/updateFollow", async(ctx, next) => {
+  let data = ctx.request.body;
+  let sql = `SELECT * FROM loveUser WHERE dyNumber=${data.dyNumber}`;
+  const result = await db.updateFollow(sql, data.dyNumber, data.loveDyNumber);
+  if(result.status == 200) {
+    ctx.body = {
+      code: 200,
+    }
+  }else {
+    ctx.body = {
+      code: 201
     }
   }
 })

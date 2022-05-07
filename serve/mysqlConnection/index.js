@@ -1,3 +1,4 @@
+
 let mysql = require("mysql");
 
 let connection = mysql.createConnection({
@@ -295,6 +296,95 @@ function fansInfo(sql) {
     });
 }
 
+//关注人员获取
+function followsPeo(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function(err, result) {
+            if(err) {
+                reject(err);
+            }
+            if(result.length != 0) {
+                let len = result.length;
+                let arr = [];
+                for(let i=0; i<len; i++) {
+                    if(result[i].dyNumber != result[i].loveDyNumber) {
+                        arr.push(result[i].loveDyNumber);
+                    }
+                }
+                resolve({
+                    status: 200,
+                    info: arr,
+                    len: arr.length,
+                })
+            }else {
+                resolve({
+                    status: 400,
+                })
+            }
+        })
+    })
+}
+
+//增加关注
+function addFollow(sql) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function(err, result) {
+            if(err) {
+                reject(err);
+            }
+            if(result) {
+                resolve({
+                    status: 200,
+                });
+            }else {
+                resolve({
+                    status: 400,
+                });
+            }
+        })
+    })
+}
+
+//更新关注
+function updateFollow(sql, dyNumber, loveDyNumber) {
+    return new Promise((resolve, reject) => {
+        connection.query(sql, function(err, result) {
+            if(err) {
+                reject(err);
+            }
+            if(result) {
+                let len = result.length;
+                let sql2 = `UPDATE user SET followNum="${len}" WHERE dyNumber="${dyNumber}"`;
+                connection.query(sql2, function(err, result) {
+                    if(err) {
+                        reject(err);
+                    }
+                })
+                let sql3 = `SELECT * FROM loveUser WHERE loveDyNumber="${loveDyNumber}"`;
+                connection.query(sql3, function(err, result) {
+                    if(err) {
+                        reject(err);
+                    }
+                    let len1 = result.length;
+                    let sql4 = `UPDATE user SET fansNum="${len1}" WHERE dyNumber="${loveDyNumber}"`;
+                    connection.query(sql4, function(err, result) {
+                        if(err) {
+                            reject(err);
+                        }
+                        resolve({
+                            status: 200,
+                        });
+                    })
+                })
+            }else {
+                resolve({
+                    status: 400,
+                });
+            }
+        })
+    })
+}
+
 function endConnection() {
     connection.end();
 }
@@ -321,4 +411,10 @@ module.exports = {
     uploadVideoUrl,
     //粉丝信息获取
     fansInfo,
+    //关注人
+    followsPeo,
+    //增加关注
+    addFollow,
+    //更新关注
+    updateFollow,
 }

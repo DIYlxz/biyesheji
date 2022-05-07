@@ -24,6 +24,7 @@ const routes = [
   },
   {
     path: "/mainPage",
+    //懒加载
     component: () => import("../views/MainPage/index.vue"),
     children: [{
       path: "",

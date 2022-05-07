@@ -6,7 +6,9 @@ export default {
         //喜爱数量
         userGoodNum: localStorage.getItem("ugn") ? localStorage.getItem("ugn") : 0,
         //收藏信息
-        collectionInfo: localStorage.getItem("ci") ? JSON.parse(localStorage.getItem("ci")) : null,
+        collectionInfo: localStorage.getItem("ci") ? JSON.parse(localStorage.getItem("ci")) : {},
+        //关注信息
+        followInfo: localStorage.getItem("fi") ? localStorage.getItem("fi") : [],
     }),
     mutations: {
         //账号信息
@@ -35,5 +37,16 @@ export default {
         removeCollectionInfo() {
             localStorage.removeItem("ci");
         },
+        //关注信息
+        setFollowInfo(state, arr) {
+            if (arr != []) {
+                let _arr = JSON.stringify(arr);
+                localStorage.setItem("fi", _arr)
+                state.followInfo = arr;
+            }
+        },
+        removeFollowInfo() {
+            localStorage.removeItem("fi");
+        }
     }
 }

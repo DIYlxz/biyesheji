@@ -11,7 +11,9 @@
           浏览器不支持 video 标签
         </video>
         <div class="hv_interaction">
-          <follow :vimsg="item.videoId"></follow>
+          <div @click="addFollow($event, item.dyNumber)">
+            <follow :vimsg="item.videoId"></follow>
+          </div>
           <div @click="goodOperation($event, item.videoId)">
             <like :vimsg="item.videoId"></like>
           </div>
@@ -118,7 +120,7 @@ export default {
     this.mouseScrollListen();
   },
   computed: {
-    ...mapState("login", ["user"]),
+    ...mapState("login", ["user", "followInfo"]),
     ...mapState("video", ["videoInfo"]),
     ...mapState("fans", ["fansInfo"]),
   },
@@ -126,6 +128,46 @@ export default {
     ...mapMutations("video", ["setVideoInfo"]),
     ...mapMutations("login", ["setUserGoodNum", "setCollectionInfo"]),
     ...mapMutations("fans", ["setFansInfo", "setShareUrl"]),
+    //关注信息
+    getFollow() {
+      sendPost("/followPeo", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
+        if (data.code == 200) {
+          this.setFollowInfo(data.info);
+        } else {
+          this.setFollowInfo(data.info);
+        }
+      });
+    },
+    //关注
+    addFollow(e, loveDyNumber) {
+      if (this.user.dyNumber != loveDyNumber) {
+        let len = this.followInfo.length;
+        for (let i = 0; i < len; i++) {
+          if (this.followInfo[i] == loveDyNumber) {
+            this.$message.error("已经关注该作者了");
+            return;
+          }
+        }
+        sendPost("/addFollow", {
+          dyNumber: this.user.dyNumber,
+          loveDyNumber,
+        }).then(() => {
+          this.$message({
+            type: "success",
+            message: "成功关注",
+          });
+          sendPost("/updateFollow", {
+            dyNumber: this.user.dyNumber,
+            loveDyNumber,
+          });
+          this.getFollow();
+        });
+      } else {
+        this.$message.error("不能关注本人");
+      }
+    },
     //点击分享
     shareOpen(e, videoUrl) {
       sendPost("/getFans", {

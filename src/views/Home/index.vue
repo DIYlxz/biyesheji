@@ -34,21 +34,24 @@ export default {
     this.getVideoData();
     this.getLoveNum();
     this.getUserCollectionData();
+    this.getFollow();
   },
   methods: {
     ...mapMutations("video", ["setVideoInfo", "removeVideoInfo"]),
-    ...mapMutations("login", ["setUserGoodNum", "setCollectionInfo"]),
+    ...mapMutations("login", [
+      "setUserGoodNum",
+      "setCollectionInfo",
+      "setFollowInfo",
+    ]),
     //当前用户收藏信息询问
     getUserCollectionData() {
       sendPost("/getUserCollection", {
         dyNumber: this.user.dyNumber,
       }).then((data) => {
-        if (data.code == 200) {
-          this.setCollectionInfo({
-            info: data.info,
-            len: data.len,
-          });
-        }
+        this.setCollectionInfo({
+          info: data.info,
+          len: data.len,
+        });
       });
     },
     //请求获取视频资源
@@ -78,8 +81,18 @@ export default {
       sendPost("/getGoodNum", {
         dyNumber: this.user.dyNumber,
       }).then((data) => {
+        this.setUserGoodNum(data.loveNum);
+      });
+    },
+    //关注信息
+    getFollow() {
+      sendPost("/followPeo", {
+        dyNumber: this.user.dyNumber,
+      }).then((data) => {
         if (data.code == 200) {
-          this.setUserGoodNum(data.loveNum);
+          this.setFollowInfo(data.info);
+        } else {
+          this.setFollowInfo(data.info);
         }
       });
     },

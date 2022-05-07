@@ -34,7 +34,7 @@
                 <div class="ustbBorder"></div>
                 <div class="ustbSelect">
                   <div class="iconfont icon-shoucangxiao ustbIcon ustbi3"></div>
-                  <div class="ustbNum">{{collectionInfo.len}}</div>
+                  <div class="ustbNum">{{collectionInfo.len || 0}}</div>
                   <div>我的收藏</div>
                 </div>
               </div>

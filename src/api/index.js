@@ -1,6 +1,7 @@
 import axios from "axios"
 
 axios.defaults.baseURL = "/api";
+
 const service = axios.create({
     //基本路径
     baseURL: "/api",
